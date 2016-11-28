@@ -1,0 +1,1 @@
+Config files will be stored here. Should not be available through web server for a security reason.
