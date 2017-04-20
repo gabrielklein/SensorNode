@@ -1,5 +1,8 @@
 #include "ServerUtil.h"
 
+/**
+ * Get mime typed based on the extension of the file.
+ */
 String ServerUtil::getMime(String name) {
 
         if (name.equals("/")) {
@@ -31,4 +34,36 @@ String ServerUtil::getMime(String name) {
         }
 
         return "text/html";
+};
+
+/**
+ * Send a success message
+ */
+void ServerUtil::sendSuccess(ESP8266WebServer *webServer) {
+
+        DynamicJsonBuffer jsonBuffer;
+        JsonObject& x = jsonBuffer.createObject();
+        x["status"] = "ok";
+        x["time"] = millis();
+
+        String s;
+        x.printTo(s);
+        webServer->send(200, "application/json", s);
+};
+
+/**
+ * Send a fail message
+ */
+void ServerUtil::sendFail(ESP8266WebServer *webServer, int errorId, String errorDesc) {
+
+        DynamicJsonBuffer jsonBuffer;
+        JsonObject& x = jsonBuffer.createObject();
+        x["status"] = "error";
+        x["id"] = errorId;
+        x["desc"] = errorDesc;
+        x["time"] = millis();
+
+        String s;
+        x.printTo(s);
+        webServer->send(200, "application/json", s);
 };

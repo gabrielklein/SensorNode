@@ -1,0 +1,35 @@
+//
+// This class is used for "notifications" on a RGB PIN
+//
+#ifndef ITIME_H
+#define ITIME_H
+
+#include "../Settings.h"
+#include <Arduino.h>
+#include <WiFiUdp.h>
+#include <ESP8266WiFi.h>
+#include <NTPClient.h>
+#include <Time.h>
+#include <Timezone.h>
+#include "../server/IServer.h"
+#include "../server/ServerUtil.h"
+
+class ITime : public IServer {
+public:
+ITime();
+~ITime();
+void setup();
+String servName();
+void servRegister(ESP8266WebServer *webServer);
+void servTime();
+void loop();
+
+private:
+ESP8266WebServer *webServer;
+const char* timeHost = "time.nist.gov";
+WiFiUDP ntpUDP;
+NTPClient *timeClient;
+
+};
+
+#endif

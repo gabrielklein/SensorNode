@@ -1,23 +1,42 @@
-#include <ESP8266WiFi.h>
 
 #ifndef SETTINGS_H
 #define SETTINGS_H
 
 // -------------------------
-// Define the AP Mode "switch"
 
-// If we have a power switch on pin D1 (pull up)
-#define AP_MODE_SWITCH
-static const uint8_t AP_MODE_RESET_WLAN = D1;
+// Maximum number of items in config files
+// Avoid using a crazy value
+#define CONFIG_MAX_ITEM 32
 
-// -------------------------
-// Define the AP Mode "switch"
+// Webserver on port 80
+#define WEB_SERVER_SN_ENABLE
 
-// If we have a RGB notification led
-#define NOTIFICATION_LED_RGB
-static const uint8_t NOTIFICATION_LED_R = D2;
-static const uint8_t NOTIFICATION_LED_G = D3;
-static const uint8_t NOTIFICATION_LED_B = D4;
+// Client that open an access point or connect to the access point.
+#define AP_SERVER_CLIENT_ENABLE
+
+// Do we have a WS281x on port D4 (recommended)
+#define WS281X_STRIP_ENABLE
+
+// A dallas temperature module
+#define DALLAS_ENABLE
+#define DALLAS_PIN D1
+
+// A relay, you can have up to 5 relays
+// Comment pin assignement to avoid using them
+#define RELAY_ENABLE
+#define RELAY_PIN_0 D7
+#define RELAY_PIN_1 D8
+//#define RELAY_PIN_2
+//#define RELAY_PIN_3
+//#define RELAY_PIN_4
+
+// Get time from internet and sync it locally.
+#define TIME_ENABLED
+
+
+// --------------------------------------------------------
+// --------------------------------------------------------
+// --------------------------------------------------------
 
 
 

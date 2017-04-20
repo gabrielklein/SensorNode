@@ -1,0 +1,41 @@
+//
+// This class is used to connect to the network.
+//
+#ifndef APSTACLIENT_H
+#define APSTACLIENT_H
+
+#include <Arduino.h>
+#include "FS.h"
+#include "FileServ.h"
+#include "KeyStore.h"
+#include "../module/WS281xStrip.h"
+#include "../server/IServer.h"
+
+#include <ESP8266WiFi.h>
+#include <ESP8266WebServer.h>
+#include <ESP8266mDNS.h>
+#include <DNSServer.h>
+#include <ArduinoJson.h>
+
+class APStaClient : public IServer {
+
+public:
+APStaClient(FileServ *fileServ, WS281xStrip *ledStrip);
+~APStaClient();
+void setup();
+void loop();
+String servName();
+void servRegister(ESP8266WebServer *webServer);
+void servScan();
+
+private:
+KeyStore keyStore;
+bool connectClient();
+bool connectAP();
+DNSServer dnsServer;
+bool isAPEnabled = false;
+WS281xStrip *ledStrip;
+ESP8266WebServer *webServer;
+};
+
+#endif

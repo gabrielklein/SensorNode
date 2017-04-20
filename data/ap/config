@@ -1,0 +1,16 @@
+{
+
+    "time": 241767,
+    "path": "/config/WirelessClient.kst",
+    "maxItems": 32,
+    "config": {
+        "wireless_password": "MyPassword",
+        "wireless_ssid": "MySSID",
+        "ip_dhcp": "0",
+        "ip_ip": "10.0.0.234",
+        "ip_subnet": "255.255.255.0",
+        "ip_gateway": "10.0.0.1",
+        "ip_dns": "8.8.8.8"
+    }
+
+}
