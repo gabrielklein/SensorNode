@@ -11,7 +11,7 @@
 #include "ITime.h"
 #include "../server/WebServerSN.h"
 #include "../module/WS281xStrip.h"
-#include "../module/DallasTemp.h"
+#include "../module/Temp.h"
 #include "../module/Relay.h"
 
 
@@ -28,9 +28,10 @@ WebServerSN *webServerSN = NULL;
 FileServ fileServ;
 APStaClient *apStaClient = NULL;
 WS281xStrip *ws281xStrip = NULL;
-DallasTemp *dallasTemp = NULL;
+Temp *temp = NULL;
 Relay *relay = NULL;
 ITime *iTime = NULL;
+bool isClientMode = false;
 };
 
 #endif

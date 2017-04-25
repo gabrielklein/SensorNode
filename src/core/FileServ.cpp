@@ -28,3 +28,13 @@ File FileServ::openR(const String &string) {
 File FileServ::openW(const String &string) {
         return SPIFFS.open(string, "w");
 }
+
+/**
+ * Delete all configuration files.
+ */
+void FileServ::deleteConfig() {
+        Dir d = SPIFFS.openDir("/config/");
+        while (d.next()) {
+                SPIFFS.remove(d.fileName());
+        }
+}

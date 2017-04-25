@@ -24,6 +24,8 @@ void servRegister(ESP8266WebServer *webServer);
 void servSet();
 int countLed = 60;
 void loop();
+int counter1 = 0;
+int counter2 = 0;
 
 private:
 ESP8266WebServer *webServer;

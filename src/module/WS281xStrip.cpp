@@ -13,10 +13,7 @@ WS281xStrip::~WS281xStrip() {
  */
 void WS281xStrip::setup() {
         this->neo->Begin();
-        RgbColor c = RgbColor(0, 0, 0);
-        for (int i=0; i<this->countLed; i++) {
-                this->neo->SetPixelColor(i, c);
-        }
+        this->neo->ClearTo(RgbColor(0, 0, 0));
         this->neo->Show();
 
         for (int i=0; i<countLed; i++) {
@@ -132,13 +129,25 @@ void WS281xStrip::servSet() {
  * Do actions in the background
  */
 void WS281xStrip::loop() {
-
+        counter1++;
+        if (counter1>100) {
+                this->neo->SetPixelColor(counter2, RgbColor(0,0,0));
+                counter1 = 0;
+                counter2++;
+                if (counter2>=countLed) {
+                        counter2 = 0;
+                }
+                this->neo->SetPixelColor(counter2, RgbColor(0,50,0));
+                this->neo->Show();
+                counter1 = 0;
+        }
 }
 
 /**
  * Set a rgb color (simple on-off)
  */
 void WS281xStrip::rgb(int r, int g, int b) {
+        this->neo->ClearTo(RgbColor(0, 0, 0));
         for (int i=0; i<5; i++) {
                 this->neo->SetPixelColor(i, RgbColor(r, g, b));
         }
@@ -149,6 +158,6 @@ void WS281xStrip::rgb(int r, int g, int b) {
  * Set a rgb color (simple on-off)
  */
 void WS281xStrip::rgb(int id, int r, int g, int b) {
-        this->neo->SetPixelColor(0, RgbColor(r, g, b));
+        this->neo->SetPixelColor(id, RgbColor(r, g, b));
         this->neo->Show();
 };

@@ -2,90 +2,68 @@
 <html>
 
 <head>
-    <title>SensorNode</title>
-    <meta charset="UTF-8">
-    <link rel="stylesheet" href="index.css" />
-    <script src="../jquery.min.js"></script>
-    <script src="index.js"></script>
-    <meta name="description" content="SensorNode - Access your ESP8266 devices" />
+  <title>SensorNode</title>
+  <meta charset="UTF-8">
+  <link rel="stylesheet" href="index.css" />
+  <script src="../jquery.min.js"></script>
+  <script src="index.js"></script>
+  <meta name="description" content="SensorNode - Access your ESP8266 devices" />
 </head>
 
 <body>
 
-    <article class="tabs">
-        <section id="tab1">
-            <h2><a id="tab1a">Help</a></h2>
-            <h3>SensorNode</h3>
-            <p>SensorNode is an OpenSource generic framework to access different sensor using the ESP8266 (NodeMCU V3).</p>
-            <p>Made by Gabriel Klein on <a href="https://www.nuage.ch">.</a></p>
-            <p>For more informations, check the project on github <a href="https://github.com/gabrielklein/SensorNode">https://github.com/gabrielklein/SensorNode</a>.</p>
-            <br /> You can reset your sensor here: <input type="button" id="reset" value="Reset" />
-            <br />
-            <br />
-            <br />
-            <input type="button" id="reboot" value="Reboot" />
-        </section>
+  <article class="tabs">
+    <section id="tab1">
+      <h2><a id="tab1a">Help</a></h2>
+      <h3>SensorNode</h3>
+      <p>SensorNode is an OpenSource generic framework to access different sensor using the ESP8266 (NodeMCU V3).</p>
+      <p>Made by Gabriel Klein. My website: <a href="https://nuage.ch">https://nuage.ch</a></p>
+      <p>For more informations, check the project on github<br /><a href="https://github.com/gabrielklein/SensorNode">https://github.com/gabrielklein/SensorNode</a>.</p>
+      <br /> Reset your module: <input type="button" id="reset" value="Reset" />
+      <br /> Reboot your module: <input type="button" id="reboot" value="Reboot" />
+      <br /><br /> <a href="../service/index.html">View and edit sensors and services.</a>
+    </section>
 
-        <section id="tab2">
-            <h2><a id="tab2a">Wireless</a></h2>
-            <h3>Configure wireless access</h3>
-            <p>What is the configuration of your network?</p>
-            <p>
-                <form action="">
-                    SSID:<br />
-                    <input type="text" id="wireless_ssid" name="wireless_ssid" size="60">
-                    <br/> Password:
-                    <br />
-                    <input type="text" id="wireless_password" name="wireless_password" size="60"><br />
-                    <input type="button" id="wireless_save" value="Save" size="60"><br /><br />
-                    <input type="button" id="wireless_scan" value="Scan Network"><br />
-                </form>
-            </p>
-            <p>
-                <div id="scanresult"></div>
-            </p>
-        </section>
+    <section id="tab2">
+      <h2><a id="tab2a">Wireless</a></h2>
+      <h3>Configure wireless access</h3>
+      <p>What is the configuration of your network?</p>
+      <p>
+        <form action="">
+          SSID:<br />
+          <input type="text" id="wireless_ssid" name="wireless_ssid" size="60">
+          <br/> Password:
+          <br />
+          <input type="text" id="wireless_password" name="wireless_password" size="60"><br />
+          <input type="button" id="wireless_save" value="Save" size="60"><br /><br />
+          <input type="button" id="wireless_scan" value="Scan Network"><br />
+        </form>
+      </p>
+      <p>
+        <div id="scanresult"></div>
+      </p>
+    </section>
 
-        <section id="tab3">
-            <h2><a id="tab3a">IP</a></h2>
-            <h3>Configure IP</h3>
-            <p>Set the ip if you want to make it static.</p>
-            <p>
-                <form action="">
-                    <input type="checkbox" id="ip_dhcp" name="ip_dhcp">Dynamic IP (DHCP)</input><br />
-                    <span id="ipdhcpspan">
+    <section id="tab3">
+      <h2><a id="tab3a">IP</a></h2>
+      <h3>Configure IP</h3>
+      <p>Set the ip if you want to make it static.</p>
+      <p>
+        <form action="">
+          <input type="checkbox" id="ip_dhcp" name="ip_dhcp">Dynamic IP (DHCP)</input><br />
+          <span id="ipdhcpspan">
                     <br />IP: (Example: 192.168.0.123)<br />
                     <input type="text" id="ip_ip" size="60"><br /> Subnet: (Example: 255.255.255.0)<br />
                     <input type="text" id="ip_subnet" size="60"><br /><br /> Gateway: (Example: 192.168.0.1)<br />
                     <input type="text" id="ip_gateway" size="60"><br /> DNS: (Example: 8.8.8.8)<br />
                     <input type="text" id="ip_dns" size="60"><br />
                     </span>
-                    <br />
-                    <input type="button" id="ip_save" value="Save"><br /><br />
-                </form>
-            </p>
-        </section>
-
-        <section id="tab4">
-            <h2><a id="tab4a">Remote</a></h2>
-            <h3>Configure remote access</h3>
-            <p>
-                <form action="">
-                    <input type="checkbox" id="remote_use" name="remote.use">Enable remote connection</input>
-                    <br />
-                    <span id="remotespan">
-                    <br />Remote Base URL (Example: http://www.mysite.com/datactl)<br />
-                    <input type="text" id="remote_url" size="60"><br />
-                    </span>
-                    <br />
-                    <input type="button" id="remote_save" value="Save"><br /><br />
-                </form>
-            </p>
-        </section>
-
-    </article>
-
+          <br />
+          <input type="button" id="ip_save" value="Save"><br /><br />
+        </form>
+      </p>
+    </section>
+  </article>
 
 </body>
-
 </html>

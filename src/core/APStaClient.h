@@ -22,11 +22,13 @@ class APStaClient : public IServer {
 public:
 APStaClient(FileServ *fileServ, WS281xStrip *ledStrip);
 ~APStaClient();
-void setup();
+bool setup();
 void loop();
 String servName();
 void servRegister(ESP8266WebServer *webServer);
 void servScan();
+void servReset();
+void servReboot();
 
 private:
 KeyStore keyStore;
@@ -36,6 +38,7 @@ DNSServer dnsServer;
 bool isAPEnabled = false;
 WS281xStrip *ledStrip;
 ESP8266WebServer *webServer;
+FileServ *fileServ;
 };
 
 #endif

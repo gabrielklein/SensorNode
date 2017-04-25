@@ -22,14 +22,6 @@ function showHideLayer() {
     $("#ipdhcpspan").hide();
   }
 
-  if (!$("#remote_use").is(':checked')) {
-    // Unckecked
-    $("#remotespan").hide();
-  } else {
-    // Checked
-    $("#remotespan").show();
-  }
-
 }
 
 
@@ -89,10 +81,6 @@ $(document).ready(function() {
     return false;
   });
 
-  $("#tab4a").click(function() {
-    clickedTab("#tab4", "#tab4a");
-    return false;
-  });
 
   // -------------------
   // About panel -------
@@ -196,12 +184,6 @@ $(document).ready(function() {
           $('#scanresult').append("<br />");
         });
 
-
-
-
-
-
-
       })
       .fail(function(xhr, status, error) {
         alert("Cannot scan network.\n" + error);
@@ -247,45 +229,6 @@ $(document).ready(function() {
     setTimeout("showHideLayer();", 100);
     return true;
   });
-
-  // -------------------
-  // Configure remote -------
-  // -------------------
-
-  $("#remote_save").click(function() {
-
-
-    $.get("config", {
-        remote_use: $("#remote_use").is(':checked') ? "1" : "0",
-        remote_url: $("#remote_url").val()
-      })
-      .done(function(data) {
-        alert("Data saved");
-        //$("#savewireless").attr('disabled', null);
-      }).fail(function(xhr, status, error) {
-        alert("Sorry cannot save.\n" + error);
-        //$("#savewireless").attr('disabled', null);
-      });
-    //      $.ajax({
-    //  type: "POST",
-    //  url: url,
-    //  data: data,
-    //  success: success,
-    //  dataType: dataType
-    //});
-    return false;
-  });
-
-  $("#remote_use").change(function() {
-    setTimeout("showHideLayer();", 100);
-    return true;
-  });
-
-
-
-
-
-
 
 
 });

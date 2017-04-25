@@ -16,13 +16,14 @@ void setup();
 void addServ(IServer *iServer);
 String servName();
 void servRegister(ESP8266WebServer *webServer);
+void apModeOnly();
 
 private:
 FileServ *fileServ;
 ESP8266WebServer *webServer;
 void servFiles();
 void send(int responseCode, String content, String mime);
-
+bool apModeEnableOnly = false;
 };
 
 #endif

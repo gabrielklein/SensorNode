@@ -32,6 +32,11 @@ String WebServerSN::servName() {
         return "server";
 }
 
+void WebServerSN::apModeOnly() {
+        Serial.println("WebServerSN: apModeOnly");
+        apModeEnableOnly = true;
+}
+
 /**
  * Register services on this webserver
  */
@@ -99,6 +104,22 @@ void WebServerSN::servFiles() {
                 String s2 = "<html><head><title>No access</title></head><body>No access here!</body></html>";
                 this->send(403, s2, "text/html");
                 return;
+        }
+
+        if (apModeEnableOnly) {
+                if (name.startsWith("/service/")) {
+                        Serial.println("WebServerSN: No access to /service/!");
+                        String s2 = "<html><head><meta http-equiv=\"refresh\" content=\"0;URL='/ap/index.html'\" /><title>No access to /service/ when in ap mode</title></head><body>No access to /service/ when in ap mode.<br />Configure access point <a href=\"/ap/index.html\">here</a>.</body></html>";
+                        this->send(403, s2, "text/html");
+                        return;
+                }
+
+                if (name.startsWith("/index.html")) {
+                        Serial.println("WebServerSN: Redirect /index.html to ap!");
+                        String s2 = "<html><head><meta http-equiv=\"refresh\" content=\"0;URL='/ap/index.html'\" /><title>Redirect to ap mode</title></head><body>Redirect to AP.<br />Configure access point <a href=\"/ap/index.html\">here</a>.</body></html>";
+                        this->send(403, s2, "text/html");
+                        return;
+                }
         }
 
         // Check the chars in the name

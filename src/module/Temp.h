@@ -1,10 +1,10 @@
 //
 // This class is used for "notifications" on a RGB PIN
 //
-#ifndef DALLASTEMP_H
-#define DALLASTEMP_H
+#ifndef TEMP_H
+#define TEMP_H
 
-#define DALLASTEMP_MAX_MODULE 10
+#define TEMP_MAX_MODULE 10
 
 
 #include "../Settings.h"
@@ -14,10 +14,13 @@
 #include <OneWire.h>
 #include <DallasTemperature.h>
 
-class DallasTemp : public IServer {
+#include <DHT.h>
+#include <DHT_U.h>
+
+class Temp : public IServer {
 public:
-DallasTemp();
-~DallasTemp();
+Temp();
+~Temp();
 void setup();
 String servName();
 void servRegister(ESP8266WebServer *webServer);
@@ -29,8 +32,11 @@ ESP8266WebServer *webServer;
 OneWire *oneWire = NULL;
 DallasTemperature *sensors = NULL;
 int deviceCount = 0;
-DeviceAddress addr[DALLASTEMP_MAX_MODULE];
-
+DeviceAddress addr[TEMP_DALLAS_MAX_MODULE];
+DHT *dht;
+long timeLastUpdate = 0;
+float dhtTemp = 0;
+float dhtHumidity = 0;
 };
 
 #endif

@@ -18,8 +18,14 @@
 #define WS281X_STRIP_ENABLE
 
 // A dallas temperature module
-#define DALLAS_ENABLE
-#define DALLAS_PIN D1
+#define TEMP_ENABLE
+// Update every miliseconds temperature.
+#define TEMP_UPDATE_EVERY_MS 15000
+#define TEMP_DALLAS_PIN D1
+#define TEMP_DALLAS_MAX_MODULE 8
+#define TEMP_SECONDARY_PIN D3
+#define TEMP_SECONDARY_TYPE DHT22
+#define TEMP_SECONDARY_NAME "dht22"
 
 // A relay, you can have up to 5 relays
 // Comment pin assignement to avoid using them

@@ -1,27 +1,27 @@
-#include "DallasTemp.h"
+#include "Temp.h"
 
-
-
-
-DallasTemp::DallasTemp() {
-        this->oneWire = new OneWire(DALLAS_PIN);
+Temp::Temp() {
+        this->oneWire = new OneWire(TEMP_DALLAS_PIN);
         this->sensors = new DallasTemperature(this->oneWire);
+        this->dht = new DHT(TEMP_SECONDARY_PIN, TEMP_SECONDARY_TYPE);
 };
 
-DallasTemp::~DallasTemp() {
+Temp::~Temp() {
         delete(this->sensors);
         delete(this->oneWire);
-
+        delete(this->dht);
 };
 
 
-void DallasTemp::setup() {
+void Temp::setup() {
+
         this->sensors->begin();
+        dht->begin();
 
         this->deviceCount = this->sensors->getDeviceCount();
-        if (this->deviceCount>DALLASTEMP_MAX_MODULE) {
+        if (this->deviceCount>TEMP_DALLAS_MAX_MODULE) {
                 Serial.println("You have more temperature sensors than accepted. Change DallasTemp.h");
-                this->deviceCount = 10;
+                this->deviceCount = TEMP_DALLAS_MAX_MODULE;
         }
 
         for (int i=0; i<this->deviceCount; i++) {
@@ -31,21 +31,59 @@ void DallasTemp::setup() {
 };
 
 
-String DallasTemp::servName() {
-        return "dallas";
+String Temp::servName() {
+        return "temperature";
 };
 
-void DallasTemp::loop() {
+/**
+ * Refresh temperature in the loop phase
+ */
+void Temp::loop() {
+
+        long d = millis()-timeLastUpdate;
+        if (d>=0 && d<TEMP_UPDATE_EVERY_MS) {
+                return;
+        }
+
+        timeLastUpdate = millis();
+        dhtHumidity = dht->readHumidity();
+        dhtTemp = dht->readTemperature();
+
+        for (int i=0; i<this->deviceCount; i++) {
+                this->sensors->requestTemperaturesByAddress(this->addr[i]);
+        }
+
 
 };
 
-void DallasTemp::servRegister(ESP8266WebServer *webServer) {
+void Temp::servRegister(ESP8266WebServer *webServer) {
         this->webServer = webServer;
-        webServer->on("/dallas/temp", HTTP_GET, [&] () {this->servTemp(); });
+        webServer->on("/temperature/get", HTTP_GET, [&] () {this->servTemp(); });
 };
 
+/**
+ * Write temperature in a json string
+ */
+void Temp::servTemp() {
 
-void DallasTemp::servTemp() {
+        bool doRefresh  = false;
+        int currentArgCount = this->webServer->args();
+        for (int i = 0; i < currentArgCount; ++i) {
+                String key = this->webServer->argName(i);
+                String value = this->webServer->arg(i);
+                // /temperature/get?forceRefresh=1
+                if (key.equals("forceRefresh")) {
+                        doRefresh = value.equals("1");
+                }
+        }
+
+
+        long start = millis();
+
+        if (doRefresh) {
+                timeLastUpdate = 0;
+                loop();
+        }
 
         char hexC[16] = { '0', '1', '2', '3', '4', '5', '6', '7', '8', '9', 'A', 'B', 'C', 'D', 'E', 'F' };
         float temp = this->sensors->getTempCByIndex(0);
@@ -55,10 +93,20 @@ void DallasTemp::servTemp() {
         root["time"] = millis();
         JsonArray& tempJ = root.createNestedArray("temp");
 
-        long start = millis();
+        {
+                if (!isnan(dhtTemp) && !isnan(dhtHumidity)) {
+                        JsonObject& x = tempJ.createNestedObject();
+                        x["model"] = "DHT22";
+                        x["addr"] = TEMP_SECONDARY_NAME;
+                        x["humidity"] = dhtHumidity;
+                        x["tempC"] = dhtTemp;
+                        x["tempF"] = DallasTemperature::toFahrenheit(dhtTemp);
+                }
+        }
+
         for (int i=0; i<this->deviceCount; i++) {
                 JsonObject& x = tempJ.createNestedObject();
-                this->sensors->requestTemperaturesByAddress(this->addr[i]);
+                //this->sensors->requestTemperaturesByAddress(this->addr[i]);
                 float tt = this->sensors->getTempC(this->addr[i]);
                 String mType = "Unknown";
                 switch(addr[i][0]) {

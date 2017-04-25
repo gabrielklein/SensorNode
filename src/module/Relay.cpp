@@ -66,7 +66,7 @@ void Relay::servRelay() {
                         relay = value.toInt();
                 }
                 if (key.equals("v")) {
-                        status = value.equals("1") || value.equals("on");
+                        status = value.equals("1");
                 }
         }
 

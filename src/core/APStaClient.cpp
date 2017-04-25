@@ -3,6 +3,7 @@
 APStaClient::APStaClient(FileServ *fileServ, WS281xStrip *ledStrip) {
         this->ledStrip = ledStrip;
         this->keyStore.setup("WirelessClient", fileServ);
+        this->fileServ = fileServ;
 };
 
 APStaClient::~APStaClient() {
@@ -11,7 +12,7 @@ APStaClient::~APStaClient() {
 /**
  * Called at setup time. Use this call to initialize some data.
  */
-void APStaClient::setup() {
+bool APStaClient::setup() {
 
 
         this->ledStrip->rgb(0, 50, 0);
@@ -20,8 +21,12 @@ void APStaClient::setup() {
         bool success = this->connectClient();
 
         // If if fails, connect as an access point
-        if (!success) {
+        if (success) {
+                return true;
+        }
+        else {
                 this->connectAP();
+                return false;
         }
 
 };
@@ -41,8 +46,31 @@ void APStaClient::servRegister(ESP8266WebServer *webServer) {
         this->webServer = webServer;
         webServer->on("/ap/scan", HTTP_GET, [&] () {this->servScan(); });
         webServer->on("/ap/config", HTTP_GET, [&] () {this->keyStore.servConfig(this->webServer); });
+        webServer->on("/ap/reset", HTTP_GET, [&] () {this->servReset(); });
+        webServer->on("/ap/reboot", HTTP_GET, [&] () {this->servReboot(); });
 
 }
+
+/**
+ * Reset and clear all configuration
+ */
+void APStaClient::servReset() {
+        ServerUtil::sendSuccess(this->webServer);
+        ledStrip->rgb(50, 0, 0);
+        fileServ->deleteConfig();
+        delay(500);
+        ESP.reset();
+};
+
+/**
+ * Just reboot
+ */
+void APStaClient::servReboot() {
+        ServerUtil::sendSuccess(this->webServer);
+        ledStrip->rgb(50, 0, 0);
+        delay(500);
+        ESP.reset();
+};
 
 /**
  * Scan wireless network

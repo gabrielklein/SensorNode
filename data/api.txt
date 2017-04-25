@@ -1,0 +1,235 @@
+API calls to "modules".
+
+Modules are physical components on the chip.
+Example: Switch on, off a led.
+
+You have another set of call in services.txt.
+An example of service is a component that switch on / off at some time.
+
+Please note that all possible calls are in this file, even if some calls are not enabled in Settings.h
+
+----------------------------------------------------------
+-- time : Time functions
+----------------------------------------------------------
+
+Time is synchronized with the network.
+
+* /time/get
+
+Get current time
+{
+
+    "utc": {
+        "timezone": "UTC",
+        "epochTime": 1493057879,
+        "hms": "18:17:59",
+        "hour": 18,
+        "minute": 17,
+        "second": 59,
+        "day": 24,
+        "weekday": 2,
+        "month": 4,
+        "year": 2017
+    },
+    "timeUnix": 1493057879,
+    "local": {
+        "timezone": "CE",
+        "hms": "20:17:59",
+        "hour": 20,
+        "minute": 17,
+        "second": 59,
+        "day": 24,
+        "weekday": 2,
+        "month": 4,
+        "year": 2017,
+        "tcr": "CEST"
+    }
+
+}
+
+----------------------------------------------------------
+
+* /time/timezone
+
+Get all supported timezones.
+If you want to add new timezones, edit "TZTime.cpp and TZTime.h"
+
+{
+
+    "time": 3460028,
+    "tz": [
+        {
+            "id": "UTC",
+            "label": "Coordinated Universal Time (GMT)",
+            "tcr": "GMT",
+            "hms": "18:18:08",
+            "hour": 18,
+            "minute": 18,
+            "second": 8
+        },
+        {
+            "id": "ausET",
+            "label": "Australia Eastern Time Zone (Sydney, Melbourne)",
+            "tcr": "AEST",
+            "hms": "04:18:08",
+            "hour": 4,
+            "minute": 18,
+            "second": 8
+        },
+        ...
+    }
+}
+
+----------------------------------------------------------
+
+* /time/config
+* /time/config?timezone=CE <- Set the timezone to CE.
+
+Configure and get a timezone.
+
+{
+
+    "time": 3448827,
+    "path": "/config/ITime.kst",
+    "maxItems": 32,
+    "config": {
+        "timezone": "CE"
+    }
+
+}
+
+----------------------------------------------------------
+-- ap : Access point
+----------------------------------------------------------
+
+* /ap/scan
+Scan network and return network list
+
+{
+
+    "networks": [
+        {
+            "ssid": "NetA",
+            "pass": "*",
+            "dbm": -54,
+            "bssid": "C4:E9:84:AA:37:52",
+            "channel": 1,
+            "isHidden": false
+        },
+        {
+            "ssid": "NetB",
+            "pass": "*",
+            "dbm": -70,
+            "bssid": "C4:04:15:5D:DD:C6",
+            "channel": 6,
+            "isHidden": false
+        }
+    ]
+
+}
+
+----------------------------------------------------------
+
+* /ap/config
+
+==> /ap/config
+returns configuration for the ap
+
+{
+
+    "time": 1477105,
+    "path": "/config/WirelessClient.kst",
+    "maxItems": 32,
+    "config": {
+        "wireless_ssid": "mySSID",
+        "wireless_password": "myPassword"
+    }
+
+}
+
+==> /ap/config?wireless_ssid=mySSID&wireless_password=myPassword
+set wireless_ssid and wireless_password and return configuration.
+
+Example parameters (but you are free to use what you want, limited to CONFIG_MAX_ITEM)
+wireless_password=
+wireless_ssid=
+ip_dhcp=1
+ip_ip=192.168.0.100
+ip_subnet=255.255.255.0
+ip_gateway=192.168.0.1
+ip_dns=8.8.8.8
+remote_use=0
+remote_url=http://yousite.com/sensornode.php
+
+----------------------------------------------------------
+-- led : Control led strips
+----------------------------------------------------------
+
+* /led/set?l=0,1&r=125&g=55&b=220
+
+l = List of comma separated leds id to be set. You can you use * to set all leds.
+r = Red level between 0-255
+g = Green level between 0-255
+b = Blue level between 0-255
+
+Example: Set all leds to 0
+/strip/set?l=*&r=0&g=0&b=0
+
+
+
+----------------------------------------------------------
+-- relay : Control a relay
+----------------------------------------------------------
+
+* /relay/set?r=0&v=0
+
+r is the id of the relay (0 to maximum 4)
+v is the status => 0: switch off, 1: switch on
+
+Switch on or off a relay
+
+Please note that the pins and number of relays is defined in Settings.h
+
+
+----------------------------------------------------------
+-- temperature : Get temperature
+----------------------------------------------------------
+
+* /temperature/get
+* /temperature/get?forceRefresh=1 : Force refresh of the temperature sensors (otherwise refreshed every 15 seconds)
+
+Return the temperature of the different connected sensors.
+
+{
+
+    "time": 21832,
+    "temp": [
+        {
+            "model": "DHT22",
+            "addr": "dht22",
+            "humidity": 26.30,
+            "tempC": 24.30,
+            "tempF": 75.74
+        },
+        {
+            "model": "DS18B20",
+            "addr": "28FF52943C0400EF",
+            "tempC": 22.50,
+            "tempF": 72.50
+        },
+        {
+            "model": "DS18B20",
+            "addr": "28FFBBA883150109",
+            "tempC": 22.31,
+            "tempF": 72.16
+        },
+        {
+            "model": "DS18B20",
+            "addr": "28FF2F94831501FB",
+            "tempC": 22.50,
+            "tempF": 72.50
+        }
+    ],
+    "requestDuration": 408
+
+}

@@ -15,6 +15,7 @@ FileServ();
 void setup();
 File openR(const String &string);
 File openW(const String &string);
+void deleteConfig();
 };
 
 #endif

@@ -7,7 +7,7 @@ Hub::~Hub() {
         delete(this->webServerSN);
         delete(this->apStaClient);
         delete(this->ws281xStrip);
-        delete(this->dallasTemp);
+        delete(this->temp);
         delete(this->relay);
 };
 
@@ -28,13 +28,6 @@ void Hub::setup() {
         this->webServerSN->setup();
         #endif
 
-        #ifdef TIME_ENABLED
-        this->iTime = new ITime();
-        this->iTime->setup();
-        if (this->webServerSN != NULL)
-                this->webServerSN->addServ(this->iTime);
-        #endif
-
         #ifdef WS281X_STRIP_ENABLE
         this->ws281xStrip = new WS281xStrip();
         this->ws281xStrip->setup();
@@ -45,25 +38,39 @@ void Hub::setup() {
 
         #ifdef AP_SERVER_CLIENT_ENABLE
         this->apStaClient = new APStaClient(&this->fileServ, this->ws281xStrip);
-        this->apStaClient->setup();
+        isClientMode = this->apStaClient->setup();
         if (this->webServerSN != NULL) {
                 this->webServerSN->addServ(this->apStaClient);
+                if (!isClientMode) {
+                        this->webServerSN->apModeOnly();
+                }
         }
         #endif
 
-        #ifdef DALLAS_ENABLE
-        this->dallasTemp = new DallasTemp();
-        this->dallasTemp->setup();
-        if (this->webServerSN != NULL)
-                this->webServerSN->addServ(this->dallasTemp);
-        #endif
+        if (isClientMode) {
 
-        #ifdef RELAY_ENABLE
-        this->relay = new Relay();
-        this->relay->setup();
-        if (this->webServerSN != NULL)
-                this->webServerSN->addServ(this->relay);
-        #endif
+            #ifdef TIME_ENABLED
+                this->iTime = new ITime(&this->fileServ);
+                this->iTime->setup();
+                if (this->webServerSN != NULL)
+                        this->webServerSN->addServ(this->iTime);
+            #endif
+
+            #ifdef TEMP_ENABLE
+                this->temp = new Temp();
+                this->temp->setup();
+                if (this->webServerSN != NULL)
+                        this->webServerSN->addServ(this->temp);
+            #endif
+
+            #ifdef RELAY_ENABLE
+                this->relay = new Relay();
+                this->relay->setup();
+                if (this->webServerSN != NULL)
+                        this->webServerSN->addServ(this->relay);
+            #endif
+
+        }
 
 
 };
@@ -74,29 +81,24 @@ void Hub::setup() {
  */
 void Hub::loop() {
 
-  #ifdef WEB_SERVER_SN_ENABLE
-        this->webServerSN->loop();
-  #endif
+        if (this->webServerSN!=NULL)
+                this->webServerSN->loop();
 
-  #ifdef TIME_ENABLED
-        this->iTime->loop();
-  #endif
+        if (this->iTime!=NULL)
+                this->iTime->loop();
 
-  #ifdef WS281X_STRIP_ENABLE
-        this->ws281xStrip->loop();
-  #endif
+        if (isClientMode) {
+                if (this->ws281xStrip!=NULL)
+                        this->ws281xStrip->loop();
+        }
 
-  #ifdef DALLAS_ENABLE
-        this->dallasTemp->loop();
-  #endif
+        if (this->temp!=NULL)
+                this->temp->loop();
 
-  #ifdef AP_SERVER_CLIENT_ENABLE
-        this->apStaClient->loop();
-  #endif
+        if (this->apStaClient!=NULL)
+                this->apStaClient->loop();
 
-  #ifdef RELAY_ENABLE
-        this->relay->loop();
-  #endif
-
+        if (this->relay!=NULL)
+                this->relay->loop();
 
 }
