@@ -2,23 +2,43 @@
 
 SensorNode is an opensource framework to configure access to different modules on the ESP8266 NodeMCU.
 
-# Configuration
+# What you can currently do?
 
+* Access temperature, time, leds using a REST API / JSON.
+* You can configure wireless access using a web interface (captive portal).
+* You can get time and configure timezones once you have configured internet access.
+* Control LEDs using the web interface (or calling an api).
+* Switch on-off a relay (using an api call).
+
+# What I expect to do?
+
+* Do actions when we are out of some temperature (send an alert).
+* Improve the ugly UI/UX, make it mobile friendly.
+* Fix some issues with RGB Leds.
+* Create a sunrise, sunset effect.
+* Use a web interface to control relays.
+* Draw some schemas and share some pictures / videos.
+* Switch on and off relay using time.
+* Switch on and off relay using temperature.
+
+Help more than welcome!
+
+# Configuration
 Settings.h contains the configuration for the pins
 
 # Needed libraries
 
 pio lib list
 
-* 64:   ArduinoJson                    @ 5.8.4
-* 54:   DallasTemperature              @ 3.7.7
-* 1:    OneWire                        @ 2.3.2
-* 76:   Timezone                       @ 8e96486b2c
-* 44:   Time                           @ 1.5
-* 551:  NTPClient                      @ 3.1.0
-* 547:  NeoPixelBus                    @ 2.2.7
-* 19:   DHT sensor library             @ 1.3.0
-* 31:   Adafruit Unified Sensor        @ 1.0.2
+* 64:   ArduinoJson (5.8.4)
+* 54:   DallasTemperature (3.7.7)
+* 1:    OneWire (2.3.2)
+* 76:   Timezone (8e96486b2c)
+* 44:   Time (1.5)
+* 551:  NTPClient (3.1.0)
+* 547:  NeoPixelBus (2.2.7)
+* 19:   DHT sensor library (1.3.0)
+* 31:   Adafruit Unified Sensor (1.0.2)
 
 
 You can install them by typing in your terminal (the icon with a > on the left of PlatformIO).
