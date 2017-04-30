@@ -1,0 +1,90 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+  <title>SensorNode</title>
+  <meta charset="UTF-8">
+  <link rel="stylesheet" href="index.css" />
+  <script src="jscolor.min.js"></script>
+  <script src="jquery.min.js"></script>
+  <script src="index-se.js"></script>
+  <meta name="description" content="SensorNode - Access your ESP8266 devices" />
+</head>
+
+<body>
+
+  <article class="tabs">
+    <section id="tab1">
+      <h2><a id="tab1a">Help</a></h2>
+      <h3>SensorNode</h3>
+      <p><i><b>Edit services configuration</b></i></p>
+      <p>The project on github<br /><a href="https://github.com/gabrielklein/SensorNode">https://github.com/gabrielklein/SensorNode</a>.</p>
+      <br /> Reboot your module: <input type="button" id="reboot" value="Reboot" />
+      <br /><br /> <a href="index-ap.html">Edit wireless settings</a>
+    </section>
+
+    <section id="tab2">
+      <h2><a id="tab2a">System</a></h2>
+      <h3>Edit configuration of the system</h3>
+      <p></p>
+      <p>
+        <form action="">
+          <p>
+            <div id="time_result">
+              <div class="loader"></div>
+            </div>
+            <input type="button" id="time_get" value="Get current ESP Time">
+          </p>
+          Timezone:<br />
+          <select id="time_select">
+           <option value="">Loading...</option>
+          </select><br />
+          <br />
+          <p>
+            Number of leds:
+            <input type="number" id="leds_count" value="-1">
+            <br />
+            <small>Supported: WS2811, WS2812, SK6812rgb, SK6812rgbw, APA102</small>
+          </p>
+          <input type="button" id="time_save" value="Save"><br /><br />
+        </form>
+      </p>
+    </section>
+
+    <section id="tab3">
+      <h2><a id="tab3a">Test</a></h2>
+      <h3>Test the different possible sensors on your module</h3>
+      <p>
+        <form action="">
+
+          <p>
+            <div id="temp_result">
+              <div class="loader"></div>
+            </div>
+            <input type="button" id="temp_get" value="Get Temperature Sensors">
+          </p>
+          <p></p>
+          <p>
+            <span id="led_range"></span><br />
+            <span id="led_span_0"><span id="led_label_0"></span>: <input class="jscolor" value="ffffff" id="led_in_0" /></span><br />
+            <span id="led_span_1"><span id="led_label_1"></span>: <input class="jscolor" value="ffffff" id="led_in_1" /></span><br />
+            <span id="led_span_2"><span id="led_label_2"></span>: <input class="jscolor" value="ffffff" id="led_in_2" /></span><br />
+            <span id="led_span_3"><span id="led_label_3"></span>: <input class="jscolor" value="ffffff" id="led_in_3" /></span><br />
+            <span id="led_span_4"><span id="led_label_4"></span>: <input class="jscolor" value="ffffff" id="led_in_4" /></span><br />
+            <span id="led_span_5"><span id="led_label_5"></span>: <input class="jscolor" value="ffffff" id="led_in_5" /></span><br />
+            <span id="led_span_6"><span id="led_label_6"></span>: <input class="jscolor" value="ffffff" id="led_in_6" /></span><br />
+            <span id="led_span_7"><span id="led_label_7"></span>: <input class="jscolor" value="ffffff" id="led_in_7" /></span><br />
+            <span id="led_span_8"><span id="led_label_8"></span>: <input class="jscolor" value="ffffff" id="led_in_8" /></span><br />
+            <span id="led_span_9"><span id="led_label_9"></span>: <input class="jscolor" value="ffffff" id="led_in_9" /></span>
+          </p>
+
+
+
+        </form>
+      </p>
+    </section>
+  </article>
+
+</body>
+
+</html>

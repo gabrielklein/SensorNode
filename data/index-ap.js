@@ -32,10 +32,7 @@ $(document).ready(function() {
 
   $("#wireless_scan").attr('disabled', null);
 
-  $.get({
-      url: "config",
-      dataType: "json"
-    })
+  $.getJSON("ap/config")
     .done(function(data) {
 
       jQuery.each(data.config, function(key, v) {
@@ -86,22 +83,23 @@ $(document).ready(function() {
   // About panel -------
   // -------------------
   $("#reboot").click(function() {
-    $.get("reboot")
+    $.getJSON("ap/reboot")
       .done(function(data) {
-        document.location.href = "https://github.com/gabrielklein/SensorNode";
+        $("#reboot").attr('disabled', 'disabled');
+        setTimeout("document.location.reload();", 2000);
       }).fail(function(xhr, status, error) {
         alert("Sorry cannot reboot.\n" + error);
-        //$("#savewireless").attr('disabled', null);
       });
   });
 
   $("#reset").click(function() {
-    $.get("reset")
+    $.getJSON("ap/reset")
       .done(function(data) {
-        document.location.reload();
+        $("#reset").attr('disabled', 'disabled');
+        setTimeout("document.location.reload();", 2000);
       }).fail(function(xhr, status, error) {
         alert("Sorry cannot reload page.\n" + error);
-        //$("#savewireless").attr('disabled', null);
+        $("#savewireless").attr('disabled', null);
       });
   });
 
@@ -111,7 +109,7 @@ $(document).ready(function() {
 
   $("#wireless_save").click(function() {
 
-    $.get("config", {
+    $.getJSON("ap/config", {
         wireless_password: $("#wireless_password").val(),
         wireless_ssid: $("#wireless_ssid").val()
       })
@@ -132,10 +130,7 @@ $(document).ready(function() {
     $('#scanresult').empty();
     $('#scanresult').append("Please wait...");
 
-    $.get({
-        url: "scan",
-        dataType: "json"
-      })
+    $.getJSON("ap/scan")
       .done(function(data) {
 
 
@@ -201,7 +196,7 @@ $(document).ready(function() {
   $("#ip_save").click(function() {
 
 
-    $.get("config", {
+    $.getJSON("ap/config", {
         ip_dhcp: $("#ip_dhcp").is(':checked') ? "1" : "0",
         ip_ip: $("#ip_ip").val(),
         ip_subnet: $("#ip_subnet").val(),

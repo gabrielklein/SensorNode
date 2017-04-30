@@ -172,8 +172,57 @@ r = Red level between 0-255
 g = Green level between 0-255
 b = Blue level between 0-255
 
+* /led/set?l=0,1&rgb=FF0000
+
+Set color using a rgb value in hex.
+
 Example: Set all leds to 0
-/strip/set?l=*&r=0&g=0&b=0
+/led/set?l=*&r=0&g=0&b=0
+
+{
+
+    "status": "ok",
+    "time": 114201
+
+}
+
+----------------------------------------------------------
+
+* /led/config?count=x
+
+Change the number of leds on the strip.
+Example /led/config?count=30
+
+{
+
+    "time": 6038,
+    "path": "/config/Led.kst",
+    "maxItems": 32,
+    "config": {
+        "count": "10"
+    }
+
+}
+
+
+----------------------------------------------------------
+
+* /led/get
+
+Get current color of each leds
+{
+
+    "time": 43961,
+    "count": 3,
+    "led": {
+        "l0": "#FF0000",
+        "l1": "#00FF00",
+        "l2": "#0000FF"
+    }
+
+}
+
+
 
 
 

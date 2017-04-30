@@ -1,0 +1,33 @@
+{
+
+    "time": 13747752,
+    "temp": [
+        {
+            "model": "DHT22",
+            "addr": "dht22",
+            "humidity": 22.30,
+            "tempC": 20.60,
+            "tempF": 69.08
+        },
+        {
+            "model": "DS18B20",
+            "addr": "28FF52943C0400EF",
+            "tempC": 20.00,
+            "tempF": 68.00
+        },
+        {
+            "model": "DS18B20",
+            "addr": "28FFBBA883150109",
+            "tempC": 19.87,
+            "tempF": 67.77
+        },
+        {
+            "model": "DS18B20",
+            "addr": "28FF2F94831501FB",
+            "tempC": 19.62,
+            "tempF": 67.32
+        }
+    ],
+    "requestDuration": 66
+
+}

@@ -10,7 +10,7 @@
 #include "APStaClient.h"
 #include "ITime.h"
 #include "../server/WebServerSN.h"
-#include "../module/WS281xStrip.h"
+#include "../module/Led.h"
 #include "../module/Temp.h"
 #include "../module/Relay.h"
 
@@ -27,7 +27,7 @@ private:
 WebServerSN *webServerSN = NULL;
 FileServ fileServ;
 APStaClient *apStaClient = NULL;
-WS281xStrip *ws281xStrip = NULL;
+Led *led = NULL;
 Temp *temp = NULL;
 Relay *relay = NULL;
 ITime *iTime = NULL;

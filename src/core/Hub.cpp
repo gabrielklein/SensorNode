@@ -6,7 +6,7 @@ Hub::Hub() {
 Hub::~Hub() {
         delete(this->webServerSN);
         delete(this->apStaClient);
-        delete(this->ws281xStrip);
+        delete(this->led);
         delete(this->temp);
         delete(this->relay);
 };
@@ -29,15 +29,15 @@ void Hub::setup() {
         #endif
 
         #ifdef WS281X_STRIP_ENABLE
-        this->ws281xStrip = new WS281xStrip();
-        this->ws281xStrip->setup();
-        this->ws281xStrip->rgb(0, 0, 0, 50);
+        this->led = new Led(&this->fileServ);
+        this->led->setup();
+        this->led->rgb(0, 0, 0, 50);
         if (this->webServerSN != NULL)
-                this->webServerSN->addServ(this->ws281xStrip);
+                this->webServerSN->addServ(this->led);
         #endif
 
         #ifdef AP_SERVER_CLIENT_ENABLE
-        this->apStaClient = new APStaClient(&this->fileServ, this->ws281xStrip);
+        this->apStaClient = new APStaClient(&this->fileServ, this->led);
         isClientMode = this->apStaClient->setup();
         if (this->webServerSN != NULL) {
                 this->webServerSN->addServ(this->apStaClient);
@@ -88,8 +88,8 @@ void Hub::loop() {
                 this->iTime->loop();
 
         if (isClientMode) {
-                if (this->ws281xStrip!=NULL)
-                        this->ws281xStrip->loop();
+                if (this->led!=NULL)
+                        this->led->loop();
         }
 
         if (this->temp!=NULL)

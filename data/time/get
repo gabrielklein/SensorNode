@@ -1,0 +1,29 @@
+{
+
+    "utc": {
+        "timezone": "UTC",
+        "epochTime": 1493150892,
+        "hms": "20:08:12",
+        "hour": 20,
+        "minute": 8,
+        "second": 12,
+        "day": 25,
+        "weekday": 3,
+        "month": 4,
+        "year": 2017
+    },
+    "timeUnix": 1493150892,
+    "local": {
+        "timezone": "CE",
+        "hms": "22:08:12",
+        "hour": 22,
+        "minute": 8,
+        "second": 12,
+        "day": 25,
+        "weekday": 3,
+        "month": 4,
+        "year": 2017,
+        "tcr": "CEST"
+    }
+
+}

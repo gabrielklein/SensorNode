@@ -1,0 +1,10 @@
+{
+
+    "time": 2563141,
+    "path": "/config/ITime.kst",
+    "maxItems": 32,
+    "config": {
+        "timezone": "CE"
+    }
+
+}

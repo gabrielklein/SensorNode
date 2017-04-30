@@ -1,0 +1,88 @@
+{
+
+    "time": 2539079,
+    "tz": [
+        {
+            "id": "UTC",
+            "label": "Coordinated Universal Time (GMT)",
+            "tcr": "GMT",
+            "hms": "21:06:35",
+            "hour": 21,
+            "minute": 6,
+            "second": 35
+        },
+        {
+            "id": "ausET",
+            "label": "Australia Eastern Time Zone (Sydney, Melbourne)",
+            "tcr": "AEST",
+            "hms": "07:06:35",
+            "hour": 7,
+            "minute": 6,
+            "second": 35
+        },
+        {
+            "id": "CE",
+            "label": "Central European Time (Frankfurt, Paris)",
+            "tcr": "CEST",
+            "hms": "23:06:35",
+            "hour": 23,
+            "minute": 6,
+            "second": 35
+        },
+        {
+            "id": "UK",
+            "label": "United Kingdom (London, Belfast)",
+            "tcr": "BST",
+            "hms": "22:06:35",
+            "hour": 22,
+            "minute": 6,
+            "second": 35
+        },
+        {
+            "id": "usET",
+            "label": "US Eastern Time Zone (New York, Detroit)",
+            "tcr": "EDT",
+            "hms": "17:06:35",
+            "hour": 17,
+            "minute": 6,
+            "second": 35
+        },
+        {
+            "id": "usCT",
+            "label": "US Central Time Zone (Chicago, Houston)",
+            "tcr": "CDT",
+            "hms": "16:06:35",
+            "hour": 16,
+            "minute": 6,
+            "second": 35
+        },
+        {
+            "id": "usMT",
+            "label": "US Mountain Time Zone (Denver, Salt Lake City)",
+            "tcr": "MDT",
+            "hms": "15:06:35",
+            "hour": 15,
+            "minute": 6,
+            "second": 35
+        },
+        {
+            "id": "usAZ",
+            "label": "Arizona is US Mountain Time Zone but does not use DST",
+            "tcr": "MST",
+            "hms": "14:06:35",
+            "hour": 14,
+            "minute": 6,
+            "second": 35
+        },
+        {
+            "id": "usPT",
+            "label": "US Pacific Time Zone (Las Vegas, Los Angeles)",
+            "tcr": "PDT",
+            "hms": "14:06:35",
+            "hour": 14,
+            "minute": 6,
+            "second": 35
+        }
+    ]
+
+}

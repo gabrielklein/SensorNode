@@ -1,0 +1,10 @@
+{
+
+    "time": 27368,
+    "path": "/config/Led.kst",
+    "maxItems": 32,
+    "config": {
+        "count": "10"
+    }
+
+}

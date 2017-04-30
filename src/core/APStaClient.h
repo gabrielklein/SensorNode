@@ -8,7 +8,7 @@
 #include "FS.h"
 #include "FileServ.h"
 #include "KeyStore.h"
-#include "../module/WS281xStrip.h"
+#include "../module/Led.h"
 #include "../server/IServer.h"
 
 #include <ESP8266WiFi.h>
@@ -20,7 +20,7 @@
 class APStaClient : public IServer {
 
 public:
-APStaClient(FileServ *fileServ, WS281xStrip *ledStrip);
+APStaClient(FileServ *fileServ, Led *led);
 ~APStaClient();
 bool setup();
 void loop();
@@ -36,7 +36,7 @@ bool connectClient();
 bool connectAP();
 DNSServer dnsServer;
 bool isAPEnabled = false;
-WS281xStrip *ledStrip;
+Led *led;
 ESP8266WebServer *webServer;
 FileServ *fileServ;
 };
