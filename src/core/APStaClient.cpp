@@ -15,7 +15,7 @@ APStaClient::~APStaClient() {
 bool APStaClient::setup() {
 
 
-        this->led->rgb(0, 50, 0);
+        this->led->rgb(0, 50, 0, true);
 
         // Try to connect as a client
         bool success = this->connectClient();
@@ -56,7 +56,7 @@ void APStaClient::servRegister(ESP8266WebServer *webServer) {
  */
 void APStaClient::servReset() {
         ServerUtil::sendSuccess(this->webServer);
-        led->rgb(50, 0, 0);
+        led->rgb(50, 0, 0, false);
         fileServ->deleteConfig();
         delay(500);
         ESP.reset();
@@ -67,7 +67,7 @@ void APStaClient::servReset() {
  */
 void APStaClient::servReboot() {
         ServerUtil::sendSuccess(this->webServer);
-        led->rgb(50, 0, 0);
+        led->rgb(50, 0, 0, false);
         delay(500);
         ESP.reset();
 };
@@ -116,6 +116,7 @@ void APStaClient::loop() {
 
 /**
  * Try to connect as a client
+ * Only call it from "setup!"
  */
 bool APStaClient::connectClient() {
 
@@ -171,16 +172,16 @@ bool APStaClient::connectClient() {
         while ( WiFi.status() != WL_CONNECTED ) {
                 for (int i=0; i<2; i++) {
                         delay ( 75 );
-                        this->led->rgb(0, 0, 50);
+                        this->led->rgb(0, 0, 50, true);
                         delay ( 75 );
-                        this->led->rgb(0, 0, 0);
+                        this->led->rgb(0, 0, 0, true);
                 }
                 Serial.println("APServerClient: Connecting...");
                 unsigned long timeN = millis();
                 // Timeout after 5 seconds
                 if (timeN - time > 10000 || WiFi.status() == WL_NO_SSID_AVAIL) {
                         Serial.println("APServerClient: Timeout with no connection...");
-                        this->led->rgb(50, 0, 0);
+                        this->led->rgb(50, 0, 0, true);
                         return false;
                 }
         }
@@ -212,12 +213,13 @@ bool APStaClient::connectClient() {
         Serial.println("************ TODO Reset if in AP mode after a few minutes.");
 
 
-        this->led->rgb(0, 50, 0);
+        this->led->rgb(0, 50, 0, true);
         return true;
 }
 
 /**
  * Try to connect as a server
+ * Only call it from "setup!"
  */
 bool APStaClient::connectAP() {
 
@@ -265,7 +267,7 @@ bool APStaClient::connectAP() {
         this->isAPEnabled = true;
         //WiFi.printDiag(Serial);
 
-        this->led->rgb(0, 50, 50);
+        this->led->rgb(0, 50, 50, true);
 
         return true;
 }

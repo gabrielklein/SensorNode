@@ -17,8 +17,8 @@ public:
 Led(FileServ *fileServ);
 ~Led();
 KeyStore keyStore;
-void rgb(int r, int g, int b);
-void rgb(int id, int r, int g, int b);
+void rgb(int r, int g, int b, bool isLoopSetupTask);
+//void rgb(int id, int r, int g, int b);
 void setup();
 NeoPixelBus<NeoGrbFeature, NeoEsp8266AsyncUart800KbpsMethod> *neo;
 String servName();
@@ -32,8 +32,11 @@ int counter1 = 0;
 int counter2 = 0;
 int counter3 = 0;
 
+
 private:
 ESP8266WebServer *webServer;
+bool doCallLedCountUpdated = false;
+bool doCallNeoShow = false;
 
 };
 

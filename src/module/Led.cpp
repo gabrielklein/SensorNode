@@ -14,6 +14,8 @@ Led::~Led() {
  */
 void Led::ledCountUpdated() {
 
+        doCallLedCountUpdated = false;
+
         String k = this->keyStore.getValue("count");
         int l = k.toInt();
         if (l<=0 || l > 1000) {
@@ -80,7 +82,7 @@ void Led::servRegister(ESP8266WebServer *webServer) {
         this->webServer = webServer;
         webServer->on("/led/set", HTTP_GET, [&] () {this->servSet(); });
         webServer->on("/led/get", HTTP_GET, [&] () {this->servGet(); });
-        webServer->on("/led/config", HTTP_GET, [&] () {this->keyStore.servConfig(this->webServer); ledCountUpdated(); });
+        webServer->on("/led/config", HTTP_GET, [&] () {this->keyStore.servConfig(this->webServer); doCallLedCountUpdated = true; });
         //webServer->on("/ap/scan.do", HTTP_GET, [&] () {this->getScan(); });
 }
 
@@ -165,7 +167,7 @@ void Led::servSet() {
                 for (int i=0; i<countLed; i++) {
                         this->neo->SetPixelColor(i, c);
                 }
-                this->neo->Show();
+                doCallNeoShow = true;
                 ServerUtil::sendSuccess(this->webServer);
         }
         else {
@@ -188,7 +190,7 @@ void Led::servSet() {
                                 s = -1;
                         }
                 }
-                this->neo->Show();
+                doCallNeoShow = true;
                 ServerUtil::sendSuccess(this->webServer);
         }
 
@@ -200,7 +202,16 @@ void Led::servSet() {
  */
 void Led::loop() {
 
-        // Disable
+
+        if (doCallLedCountUpdated) {
+                ledCountUpdated();
+        }
+
+        if (doCallNeoShow) {
+                doCallNeoShow = false;
+                this->neo->Show();
+        }
+
         return;
 
         counter1++;
@@ -250,19 +261,28 @@ void Led::loop() {
 
 /**
  * Set a rgb color (simple on-off)
+ * Warning Show is called in "loop" to avoid issues with leds
+ * isLoopSetupTask must be set to true if we are calling from the loop or setup function.
  */
-void Led::rgb(int r, int g, int b) {
+void Led::rgb(int r, int g, int b, bool isLoopSetupTask) {
         this->neo->ClearTo(RgbColor(0, 0, 0));
         for (int i=0; i<5 && i<this->countLed; i++) {
                 this->neo->SetPixelColor(i, RgbColor(r, g, b));
         }
-        this->neo->Show();
+        if (isLoopSetupTask) {
+                this->neo->Show();
+        }
+        else {
+                doCallNeoShow = true;
+        }
 };
 
 /**
  * Set a rgb color (simple on-off)
+ * Warning Show is called in "loop" to avoid issues with leds
  */
-void Led::rgb(int id, int r, int g, int b) {
-        this->neo->SetPixelColor(id, RgbColor(r, g, b));
-        this->neo->Show();
-};
+//void Led::rgb(int id, int r, int g, int b) {
+//        this->neo->SetPixelColor(id, RgbColor(r, g, b));
+//        doCallNeoShow = true;
+//        //this->neo->Show();
+//};
