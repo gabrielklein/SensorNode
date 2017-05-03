@@ -4,7 +4,7 @@
     "path": "/config/Led.kst",
     "maxItems": 32,
     "config": {
-        "count": "10"
+        "count": "14"
     }
 
 }

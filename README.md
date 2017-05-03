@@ -2,6 +2,8 @@
 
 SensorNode is an opensource framework to configure access to different modules on the ESP8266 NodeMCU.
 
+You can simulate an access on the SensorNode here https://gabrielklein.github.io/SensorNode/data/
+
 # What you can currently do?
 
 * Access temperature, time, leds using a REST API / JSON.
@@ -17,7 +19,7 @@ SensorNode is an opensource framework to configure access to different modules o
 * Fix some issues with RGB Leds.
 * Create a sunrise, sunset effect.
 * Use a web interface to control relays.
-* Draw some schemas and share some pictures / videos.
+* Draw some schema and share some pictures / videos.
 * Switch on and off relay using time.
 * Switch on and off relay using temperature.
 

@@ -44,7 +44,7 @@ void Led::ledCountUpdated() {
 void Led::setup() {
 
         this->neo->Begin();
-        this->neo->ClearTo(RgbColor(0, 0, 0));
+        //this->neo->ClearTo(RgbColor(0, 0, 0));
         this->neo->Show();
 
         for (int i=0; i<countLed; i++) {
