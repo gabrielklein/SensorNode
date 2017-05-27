@@ -19,9 +19,15 @@ String ITime::servName() {
 
 void ITime::servRegister(ESP8266WebServer *webServer) {
         this->webServer = webServer;
-        webServer->on("/time/get", HTTP_GET, [&] () {this->servTime(); });
-        webServer->on("/time/timezone", HTTP_GET, [&] () {this->servTimezone(); });
-        webServer->on("/time/config", HTTP_GET, [&] () {this->keyStore.servConfig(this->webServer); tzCurrentIndex=-1; });
+        webServer->on("/time/get", HTTP_GET, [&] () {
+                this->servTime();
+        });
+        webServer->on("/time/timezone", HTTP_GET, [&] () {
+                this->servTimezone();
+        });
+        webServer->on("/time/config", HTTP_GET, [&] () {
+                this->keyStore.servConfig(this->webServer); tzCurrentIndex=-1;
+        });
 };
 
 /**

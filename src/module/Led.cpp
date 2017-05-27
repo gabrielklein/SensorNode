@@ -9,6 +9,15 @@ Led::~Led() {
         delete(this->neo);
 };
 
+
+/**
+ * Switch on or off the internal led
+ */
+void Led::buildinLed(bool ison) {
+        // Create strange issues with leds
+        //    pinMode(BUILTIN_LED1, ison);
+}
+
 /**
  * Called when we have updated the configs.
  */
@@ -43,6 +52,9 @@ void Led::ledCountUpdated() {
  */
 void Led::setup() {
 
+        // Create strange issues
+        //pinMode(BUILTIN_LED1, OUTPUT);
+
         this->neo->Begin();
         //this->neo->ClearTo(RgbColor(0, 0, 0));
         this->neo->Show();
@@ -66,6 +78,8 @@ void Led::setup() {
                 this->neo->SetPixelColor(i, RgbColor(0,0,0));
         }
         this->neo->Show();
+
+
 }
 
 /**
@@ -80,9 +94,15 @@ String Led::servName() {
  */
 void Led::servRegister(ESP8266WebServer *webServer) {
         this->webServer = webServer;
-        webServer->on("/led/set", HTTP_GET, [&] () {this->servSet(); });
-        webServer->on("/led/get", HTTP_GET, [&] () {this->servGet(); });
-        webServer->on("/led/config", HTTP_GET, [&] () {this->keyStore.servConfig(this->webServer); doCallLedCountUpdated = true; });
+        webServer->on("/led/set", HTTP_GET, [&] () {
+                this->servSet();
+        });
+        webServer->on("/led/get", HTTP_GET, [&] () {
+                this->servGet();
+        });
+        webServer->on("/led/config", HTTP_GET, [&] () {
+                this->keyStore.servConfig(this->webServer); doCallLedCountUpdated = true;
+        });
         //webServer->on("/ap/scan.do", HTTP_GET, [&] () {this->getScan(); });
 }
 
@@ -275,6 +295,16 @@ void Led::rgb(int r, int g, int b, bool isLoopSetupTask) {
         else {
                 doCallNeoShow = true;
         }
+};
+
+/**
+ * Set a rgb color (simple on-off)
+ * Warning Show is called in "loop" to avoid issues with leds
+ * isLoopSetupTask must be set to true if we are calling from the loop or setup function.
+ */
+void Led::rgb(int id, int r, int g, int b) {
+        this->neo->SetPixelColor(id, RgbColor(r, g, b));
+        this->neo->Show();
 };
 
 /**

@@ -13,6 +13,7 @@
 #include "../module/Led.h"
 #include "../module/Temp.h"
 #include "../module/Relay.h"
+#include "../module/Switch.h"
 
 
 class Hub {
@@ -22,16 +23,18 @@ Hub();
 ~Hub();
 void setup();
 void loop();
-
-private:
 WebServerSN *webServerSN = NULL;
 FileServ fileServ;
+
+private:
 APStaClient *apStaClient = NULL;
+bool isClientMode = false;
+
 Led *led = NULL;
 Temp *temp = NULL;
 Relay *relay = NULL;
 ITime *iTime = NULL;
-bool isClientMode = false;
+Switch *switc = NULL;
 };
 
 #endif

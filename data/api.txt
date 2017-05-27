@@ -82,6 +82,18 @@ If you want to add new timezones, edit "TZTime.cpp and TZTime.h"
 
 ----------------------------------------------------------
 
+* /switch/get
+
+Get status of a pullup switch.
+
+{
+    "time": 121421,
+    "digital": { },
+    "switch1": "0"
+}
+
+----------------------------------------------------------
+
 * /time/config
 * /time/config?timezone=CE <- Set the timezone to CE.
 

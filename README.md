@@ -105,6 +105,9 @@ Connect the leds to the 5v power supply!
 
 https://www.aliexpress.com/store/product/10PCS-LOT-1-Channel-5V-Relay-Module-for-SCM-Household-Appliance-Control/110055_752210006.html
 
+or a Solid State Relay Module
+https://www.aliexpress.com/item/1pcs-SSR-10DA-10A-Solid-State-Relay-Module-3-32V-DC-Input-24-380VAC/32700727110.html
+
 Should work fine with 5v. You can connect them to port D7 and D8. Please note that they consume a lot of energy!
 
 * DS18B20 Waterproof temperature sensors (Should be supported DS18B20, DS18S20, DS1822, DS1820)
@@ -116,6 +119,12 @@ You can connect multiple temperature modules together (I've tested 3 with succes
 Link the red and blue wires together with a resistance of 4.7 kOhm. (A resistance between D1 and +3.3v)
 
 You can connect the signal wire on D1.
+
+* Switch or PIR (infrared detector)
+
+Put the signal wire on pin D5 or D6.
+
+To avoid completely chaotic behavior (false positives) it is advisable to connect an external pull-up-Resistor between the GPIO and VCC (10KOhm)
 
 * DHT22 temperature and humidity sensor.
 

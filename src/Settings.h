@@ -17,6 +17,14 @@
 // Do we have a WS281x on port D4 (recommended)
 #define WS281X_STRIP_ENABLE
 
+// Switch
+#define SWITCH_ENABLE
+#define SWITCH_PIN_0 D5
+#define SWITCH_PIN_1 D6
+//#define SWITCH_PIN_2
+//#define SWITCH_PIN_3
+//#define SWITCH_PIN_4
+
 // A dallas temperature module
 #define TEMP_ENABLE
 // Update every miliseconds temperature.

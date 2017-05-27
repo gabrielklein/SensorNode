@@ -9,6 +9,7 @@ Hub::~Hub() {
         delete(this->led);
         delete(this->temp);
         delete(this->relay);
+        delete(this->switc);
 };
 
 /**
@@ -70,6 +71,16 @@ void Hub::setup() {
                         this->webServerSN->addServ(this->relay);
             #endif
 
+            #ifdef SWITCH_ENABLE
+                this->switc = new Switch();
+                this->switc->setup();
+                if (this->webServerSN != NULL)
+                        this->webServerSN->addServ(this->switc);
+            #endif
+
+
+
+
         }
 
 
@@ -100,5 +111,8 @@ void Hub::loop() {
 
         if (this->relay!=NULL)
                 this->relay->loop();
+
+        if (this->switc!=NULL)
+                this->switc->loop();
 
 }

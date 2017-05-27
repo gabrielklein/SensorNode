@@ -16,6 +16,7 @@ bool APStaClient::setup() {
 
 
         this->led->rgb(0, 50, 0, true);
+        this->led->buildinLed(false);
 
         // Try to connect as a client
         bool success = this->connectClient();
@@ -44,10 +45,18 @@ String APStaClient::servName() {
  */
 void APStaClient::servRegister(ESP8266WebServer *webServer) {
         this->webServer = webServer;
-        webServer->on("/ap/scan", HTTP_GET, [&] () {this->servScan(); });
-        webServer->on("/ap/config", HTTP_GET, [&] () {this->keyStore.servConfig(this->webServer); });
-        webServer->on("/ap/reset", HTTP_GET, [&] () {this->servReset(); });
-        webServer->on("/ap/reboot", HTTP_GET, [&] () {this->servReboot(); });
+        webServer->on("/ap/scan", HTTP_GET, [&] () {
+                this->servScan();
+        });
+        webServer->on("/ap/config", HTTP_GET, [&] () {
+                this->keyStore.servConfig(this->webServer);
+        });
+        webServer->on("/ap/reset", HTTP_GET, [&] () {
+                this->servReset();
+        });
+        webServer->on("/ap/reboot", HTTP_GET, [&] () {
+                this->servReboot();
+        });
 
 }
 
@@ -173,8 +182,10 @@ bool APStaClient::connectClient() {
                 for (int i=0; i<2; i++) {
                         delay ( 75 );
                         this->led->rgb(0, 0, 50, true);
+                        this->led->buildinLed(true);
                         delay ( 75 );
                         this->led->rgb(0, 0, 0, true);
+                        this->led->buildinLed(false);
                 }
                 Serial.println("APServerClient: Connecting...");
                 unsigned long timeN = millis();
@@ -185,6 +196,7 @@ bool APStaClient::connectClient() {
                         return false;
                 }
         }
+        this->led->buildinLed(false);
 
 
         // Set static ip if needed
@@ -214,6 +226,8 @@ bool APStaClient::connectClient() {
 
 
         this->led->rgb(0, 50, 0, true);
+        this->led->buildinLed(true);
+
         return true;
 }
 
@@ -268,6 +282,7 @@ bool APStaClient::connectAP() {
         //WiFi.printDiag(Serial);
 
         this->led->rgb(0, 50, 50, true);
+        this->led->buildinLed(true);
 
         return true;
 }
