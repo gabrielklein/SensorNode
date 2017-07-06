@@ -10,6 +10,7 @@ Hub::~Hub() {
         delete(this->temp);
         delete(this->relay);
         delete(this->switc);
+        delete(this->geiger);
 };
 
 /**
@@ -78,6 +79,13 @@ void Hub::setup() {
                         this->webServerSN->addServ(this->switc);
             #endif
 
+            #ifdef GEIGER_ENABLE
+                this->geiger = new Geiger(&this->fileServ);
+                this->geiger->setup();
+                if (this->webServerSN != NULL)
+                        this->webServerSN->addServ(this->geiger);
+            #endif
+
 
 
 
@@ -113,6 +121,9 @@ void Hub::loop() {
                 this->relay->loop();
 
         if (this->switc!=NULL)
+                this->switc->loop();
+
+        if (this->geiger!=NULL)
                 this->switc->loop();
 
 }

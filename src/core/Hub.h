@@ -14,6 +14,7 @@
 #include "../module/Temp.h"
 #include "../module/Relay.h"
 #include "../module/Switch.h"
+#include "../module/Geiger.h"
 
 
 class Hub {
@@ -35,6 +36,7 @@ Temp *temp = NULL;
 Relay *relay = NULL;
 ITime *iTime = NULL;
 Switch *switc = NULL;
+Geiger *geiger = NULL;
 };
 
 #endif

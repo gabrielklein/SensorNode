@@ -39,10 +39,19 @@
 // Comment pin assignement to avoid using them
 #define RELAY_ENABLE
 #define RELAY_PIN_0 D7
-#define RELAY_PIN_1 D8
+// If you enable it,
+// don't forget to change the pin of the geiger counter (or disable it)
+//#define RELAY_PIN_1 D8
 //#define RELAY_PIN_2
 //#define RELAY_PIN_3
 //#define RELAY_PIN_4
+
+// Geiger counter
+#define GEIGER_ENABLE
+#define GEIGER_PIN D8
+// Conversion Factor, 0.00812 is for the J305ß tube
+#define GEIGER_CONVERT_USV 0.00812
+
 
 // Get time from internet and sync it locally.
 #define TIME_ENABLED

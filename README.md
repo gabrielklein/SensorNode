@@ -43,7 +43,9 @@ pio lib list
 * 31:   Adafruit Unified Sensor (1.0.2)
 
 
-You can install them by typing in your terminal (the icon with a > on the left of PlatformIO).
+The libraries should be installed automatically!
+
+If it doesn't work, you can install them by typing in your terminal (the icon with a > on the left of PlatformIO).
 
 platformio lib install {library id}
 
@@ -131,6 +133,32 @@ To avoid completely chaotic behavior (false positives) it is advisable to connec
 Put a resistance of 4700 Ohm between +3.3v and "signal"
 
 https://www.aliexpress.com/item/Free-shipping-DHT22-AM2302-replace-SHT11-SHT15-Humidity-temperature-and-humidity-sensor/1872664976.html
+
+
+* RadiationD-v1.1 (CAJOE) radiation monitor
+
+You have a pin P3 with GND, 5V, VIN
+
+Connect the GND RadiationD-v1.1 with GND ESP8266.
+
+I recommend to use a SN74AHCT125N as RadiationD-v1.1 is running at 5v and the ESP8266 at 3.3v.
+
+http://circuits.datasheetdir.com/102/SN74AHCT125-pinout.jpg
+
+1: 1OE: Connect to GND  (ESP8266 and RadiationD-v1)
+
+2: 1A: Input with port VIN (RadiationD-v1.1)
+
+3: 1Y: Output to D8 (ESP8266)
+
+7: GND to GND (ESP8266 and RadiationD-v1)
+
+14: Vcc to +3.3V (ESP8266)
+
+Example: https://electronics.stackexchange.com/questions/145384/convert-5v-to-3-3v-without-logic-level-converter    
+
+
+
 
 # How to deploy
 

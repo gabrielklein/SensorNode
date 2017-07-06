@@ -101,7 +101,8 @@ void Led::servRegister(ESP8266WebServer *webServer) {
                 this->servGet();
         });
         webServer->on("/led/config", HTTP_GET, [&] () {
-                this->keyStore.servConfig(this->webServer); doCallLedCountUpdated = true;
+                this->keyStore.servConfig(this->webServer);
+                doCallLedCountUpdated = true;
         });
         //webServer->on("/ap/scan.do", HTTP_GET, [&] () {this->getScan(); });
 }

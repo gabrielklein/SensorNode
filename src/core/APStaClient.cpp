@@ -58,6 +58,18 @@ void APStaClient::servRegister(ESP8266WebServer *webServer) {
                 this->servReboot();
         });
 
+        //Android captive portal. Maybe not needed. Might be handled by notFound handler
+        //webServer->on("/generate_204", HTTP_GET, [&] () {
+        //        this->serv??????();
+        //});
+
+        //Microsoft captive portal. Maybe not needed. Might be handled by notFound handler.
+        //webServer->on("/fwlink", HTTP_GET, [&] () {
+        //        this->serv??????();
+        //});
+
+
+
 }
 
 /**
