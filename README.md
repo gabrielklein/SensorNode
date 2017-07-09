@@ -11,6 +11,7 @@ You can simulate an access on the SensorNode here https://gabrielklein.github.io
 * You can get time and configure timezones once you have configured internet access.
 * Control LEDs using the web interface (or calling an api).
 * Switch on-off a relay (using an api call).
+* Get value of a geiger counter (RadiationD-v1.1)
 
 # What I expect to do?
 
@@ -135,19 +136,23 @@ Put a resistance of 4700 Ohm between +3.3v and "signal"
 https://www.aliexpress.com/item/Free-shipping-DHT22-AM2302-replace-SHT11-SHT15-Humidity-temperature-and-humidity-sensor/1872664976.html
 
 
-* RadiationD-v1.1 (CAJOE) radiation monitor
+* RadiationD-v1.1 (CAJOE) radiation monitor (Geiger counter)
 
 You have a pin P3 with GND, 5V, VIN
 
+VIN is HIGH (+5v). When you receive a particle, it becomes LOW then HIGH again.
+The signal you will get will be inverted!
+
 Connect the GND RadiationD-v1.1 with GND ESP8266.
 
-I recommend to use a SN74AHCT125N as RadiationD-v1.1 is running at 5v and the ESP8266 at 3.3v.
+You have to use a SN74AHCT125N as RadiationD-v1.1 is running at 5v and the ESP8266 at 3.3v.
 
 http://circuits.datasheetdir.com/102/SN74AHCT125-pinout.jpg
 
-1: 1OE: Connect to GND  (ESP8266 and RadiationD-v1)
+1: 1OE: Connect to VIN  (RadiationD-v1 - Not to GND!!)
 
-2: 1A: Input with port VIN (RadiationD-v1.1)
+2: 1A: Connect to 5V (RadiationD-v1.1)
+
 
 3: 1Y: Output to D8 (ESP8266)
 
@@ -155,8 +160,11 @@ http://circuits.datasheetdir.com/102/SN74AHCT125-pinout.jpg
 
 14: Vcc to +3.3V (ESP8266)
 
-Example: https://electronics.stackexchange.com/questions/145384/convert-5v-to-3-3v-without-logic-level-converter    
+Example: https://electronics.stackexchange.com/questions/145384/convert-5v-to-3-3v-without-logic-level-converter
 
+You can buy it here
+
+https://www.aliexpress.com/item/Free-Shipping-Newer-Upgrade-Assembled-DIY-Geiger-Counter-Kit-Nuclear-Radiation-Detector-GM-Tube/32616024118.html
 
 
 

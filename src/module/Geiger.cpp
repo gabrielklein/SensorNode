@@ -143,11 +143,36 @@ void Geiger::servGet() {
         float count60f = count60;
         float count300f = count300;
 
-        count5f=count5f/5.0;
-        count15f=count15f/15.0;
-        count60f=count60f/60.0;
-        count300f=count300f/300.0;
+        double durMili = (millis() - startMillis)/1000.0;
 
+
+        if (durMili>0.0 && durMili<5.0) {
+                count5f=count5f/durMili;
+        }
+        else {
+                count5f=count5f/5.0;
+        }
+
+        if (durMili>0.0 && durMili<15.0) {
+                count15f=count15f/durMili;
+        }
+        else {
+                count15f=count15f/15.0;
+        }
+
+        if (durMili>0.0 && durMili<60.0) {
+                count60f=count60f/durMili;
+        }
+        else {
+                count60f=count60f/60.0;
+        }
+
+        if (durMili>0.0 && durMili<300.0) {
+                count300f=count300f/durMili;
+        }
+        else {
+                count300f=count300f/300.0;
+        }
 
         DynamicJsonBuffer jsonBuffer;
         JsonObject& root = jsonBuffer.createObject();

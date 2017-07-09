@@ -4,7 +4,7 @@
 #ifndef GEIGER_H
 #define GEIGER_H
 
-#define MAX_STORE_DATA_GEIGER 600
+#define MAX_STORE_DATA_GEIGER 300
 
 #include "../Settings.h"
 #include <Arduino.h>
