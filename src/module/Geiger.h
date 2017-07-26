@@ -11,8 +11,9 @@
 #include "../server/IServer.h"
 #include "../server/ServerUtil.h"
 #include "../core/KeyStore.h"
+#include "../server/IMQTT.h"
 
-class Geiger : public IServer {
+class Geiger : public IServer, public IMQTT {
 public:
 Geiger(FileServ *fileServ);
 ~Geiger();
@@ -24,6 +25,9 @@ void loop();
 void tubeImpulse();
 int count;
 void servGet();
+void servSetMQTT(String mess);
+String servGetMQTT();
+
 
 const float conversionFactor = GEIGER_CONVERT_USV;
 
@@ -36,7 +40,20 @@ private:
 ESP8266WebServer *webServer;
 unsigned long startMillis;
 int currentCountGeigerPointer = 0;
-double hitPerSecsTouSv(double hitPerSeconds);
+float hitPerSecsTouSv(float hitPerSeconds);
+unsigned long lastMQTTMess = 0;
+int updateCounters();
+
+int count5 = 0;
+int count15 = 0;
+int count60 = 0;
+int count300 = 0;
+
+float count5f = 0;
+float count15f = 0;
+float count60f = 0;
+float count300f = 0;
+
 };
 
 #endif

@@ -35,6 +35,12 @@ void Relay::setup() {
 
 };
 
+void Relay::servSetMQTT(String mess) {
+}
+
+String Relay::servGetMQTT() {
+        return "";
+}
 
 String Relay::servName() {
         return "relay";
@@ -46,7 +52,9 @@ void Relay::loop() {
 
 void Relay::servRegister(ESP8266WebServer *webServer) {
         this->webServer = webServer;
-        webServer->on("/relay/set", HTTP_GET, [&] () {this->servRelay(); });
+        webServer->on("/relay/set", HTTP_GET, [&] () {
+                this->servRelay();
+        });
 };
 
 void Relay::servRelay() {

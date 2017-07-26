@@ -43,6 +43,13 @@ void Switch::servRegister(ESP8266WebServer *webServer) {
         });
 };
 
+void Switch::servSetMQTT(String mess) {
+}
+
+String Switch::servGetMQTT() {
+        return "";
+}
+
 void Switch::servSwitch() {
 
 

@@ -8,8 +8,9 @@
 #include <Arduino.h>
 #include "../server/IServer.h"
 #include "../server/ServerUtil.h"
+#include "../server/IMQTT.h"
 
-class Switch : public IServer {
+class Switch : public IServer, public IMQTT {
 public:
 Switch();
 ~Switch();
@@ -19,6 +20,8 @@ void servRegister(ESP8266WebServer *webServer);
 void loop();
 void servSwitch();
 int test = 0;
+void servSetMQTT(String mess);
+String servGetMQTT();
 
 private:
 ESP8266WebServer *webServer;

@@ -83,6 +83,33 @@
         </form>
       </p>
     </section>
+
+
+    <section id="tab4">
+      <h2><a id="tab4a">MQTT</a></h2>
+      <h3>MQTT is a way to send messages to a broker.</h3>
+      <p>
+        <form action="">
+          <input type="checkbox" id="mqtt_enable" name="mqtt_enable">Enable MQTT</input><br />
+          <span id="mqttspan">
+                    <br />Server (Ex: mqtt.example.com)<br />
+                    <input type="text" id="mqtt_server" size="60"><br />Port (Often 1883)<br />
+                    <input type="text" id="mqtt_port" size="60"><br />MQTT user (Leave blank if no user)<br />
+                    <input type="text" id="mqtt_user" size="60"><br />MQTT password (Leave blank if no password)<br />
+                    <input type="text" id="mqtt_password" size="60"><br /><br />Topic register (exemple: sensor.register)
+                    <input type="text" id="mqtt_topic_register" size="60"><br />Topic message (exemple: sensor.message)
+                    <input type="text" id="mqtt_topic_message" size="60">
+                    </span>
+          <br />
+          <input type="button" id="mqtt_save" value="Save"><br /><br />
+        </form>
+      </p>
+
+    </section>
+
+
+
+
   </article>
 
 </body>

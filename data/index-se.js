@@ -98,13 +98,13 @@ function refreshLedColor2(min, max) {
     $els.bind('change', {
         ledid: i,
         ledobj: $eli
-    },
+      },
       function(event) {
         var ledId = event.data.ledid;
         var ledVal = event.data.ledobj.val();
 
         $.getJSON({
-            url: "led/set?l="+ledId+"&rgb="+ledVal,
+            url: "led/set?l=" + ledId + "&rgb=" + ledVal,
             dataType: "json"
           })
           .done(function(data) {
@@ -192,6 +192,39 @@ function refreshTemperature() {
     });
 }
 
+/**
+ * Refresh the timezone options
+ */
+function refreshMqttConfig() {
+  $.getJSON({
+      url: "mqtt/config",
+      dataType: "json"
+    })
+    .done(function(data) {
+
+      jQuery.each(data.config, function(key, v) {
+        $("#" + key).val(v);
+        try {
+          if (v == "1") {
+            $("#" + key).prop('checked', true);
+          }
+          if (v == "0") {
+            $("#" + key).prop('checked', false);
+          }
+        } catch (e) {
+
+        }
+
+      });
+
+      setTimeout("showHideLayerMqtt();", 100);
+
+    }).fail(function(xhr, status, error) {
+      alert("Cannot get led configuration.\n" + error);
+      //$("#savewireless").attr('disabled', null);
+    });
+}
+
 
 /**
  * Functions when we are ready.
@@ -205,6 +238,8 @@ $(document).ready(function() {
   refreshLedConfig();
 
   refreshLedColor();
+
+  refreshMqttConfig();
 
   // -------------------
   // Manage tabs -------
@@ -224,6 +259,11 @@ $(document).ready(function() {
 
   $("#tab3a").click(function() {
     clickedTab("#tab3", "#tab3a");
+    return false;
+  });
+
+  $("#tab4a").click(function() {
+    clickedTab("#tab4", "#tab4a");
     return false;
   });
 
@@ -273,8 +313,47 @@ $(document).ready(function() {
 
   });
 
+  // -------------------
+  // MQTT panel -------
+  // -------------------
+  $("#mqtt_save").click(function() {
 
+    $.getJSON("mqtt/config", {
+        mqtt_enable: $("#mqtt_enable").is(':checked') ? "1" : "0",
+        mqtt_server: $("#mqtt_server").val(),
+        mqtt_port: $("#wireless_ssid").val(),
+        mqtt_user: $("#mqtt_user").val(),
+        mqtt_password: $("#mqtt_password").val(),
+        mqtt_topic_register: $("#mqtt_topic_register").val(),
+        mqtt_topic_message: $("#mqtt_topic_message").val()
+      })
+      .done(function(data) {
+        alert("Data saved");
+        //$("#savewireless").attr('disabled', null);
+      }).fail(function(xhr, status, error) {
+        alert("Sorry cannot save.\n" + error);
+        //$("#savewireless").attr('disabled', null);
+      });
 
+    return false;
+  });
+
+  function showHideLayerMqtt() {
+
+    if (!$("#mqtt_enable").is(':checked')) {
+      // Unckecked
+      $("#mqttspan").hide();
+    } else {
+      // Checked
+      $("#mqttspan").show();
+    }
+
+  }
+
+  $("#mqtt_enable").change(function() {
+    setTimeout(new function(){showHideLayerMqtt();}, 100);
+    return true;
+  });
 
 
 

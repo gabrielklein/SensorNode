@@ -20,6 +20,12 @@ bool saveKeyStore();
 bool setup(String name, FileServ* fileServ);
 // Get a value in the configuration
 String getValue(String key);
+// Get a value in the configuration
+int getValueInt(String key);
+// Get a value in the configuration
+float getValueFloat(String key);
+// Get a value in the configuration
+bool getValueBool(String key);
 // Set a value in the configuration
 bool setValue(String key, String value);
 // Set a value in the configuration

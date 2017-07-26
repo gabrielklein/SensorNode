@@ -16,8 +16,9 @@
 
 #include <DHT.h>
 #include <DHT_U.h>
+#include "../server/IMQTT.h"
 
-class Temp : public IServer {
+class Temp : public IServer, public IMQTT {
 public:
 Temp();
 ~Temp();
@@ -26,6 +27,8 @@ String servName();
 void servRegister(ESP8266WebServer *webServer);
 void servTemp();
 void loop();
+void servSetMQTT(String mess);
+String servGetMQTT();
 
 private:
 ESP8266WebServer *webServer;

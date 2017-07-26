@@ -10,6 +10,9 @@
 
 // Webserver on port 80
 #define WEB_SERVER_SN_ENABLE
+// Do we allow access to the config directory?
+// (Tip: download the config and store it in data/config to avoid reconfiguring each time)
+#define WEB_SERVER_EXPOSE_CONFIG
 
 // Client that open an access point or connect to the access point.
 #define AP_SERVER_CLIENT_ENABLE
@@ -51,6 +54,11 @@
 #define GEIGER_PIN D8
 // Conversion Factor, 0.00812 is for the J305ß tube
 #define GEIGER_CONVERT_USV 0.00812
+
+// MQTT
+// Send to a MQTT server
+#define MQTT_ENABLE
+
 
 
 // Get time from internet and sync it locally.

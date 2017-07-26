@@ -11,6 +11,7 @@ Hub::~Hub() {
         delete(this->relay);
         delete(this->switc);
         delete(this->geiger);
+        delete(this->mqtt);
 };
 
 /**
@@ -58,11 +59,20 @@ void Hub::setup() {
                         this->webServerSN->addServ(this->iTime);
             #endif
 
+            #ifdef MQTT_ENABLE
+                this->mqtt = new MQTT(&this->fileServ);
+                this->mqtt->setup();
+                if (this->webServerSN != NULL)
+                        this->webServerSN->addServ(this->mqtt);
+            #endif
+
             #ifdef TEMP_ENABLE
                 this->temp = new Temp();
                 this->temp->setup();
                 if (this->webServerSN != NULL)
                         this->webServerSN->addServ(this->temp);
+                if (this->mqtt != NULL)
+                        this->mqtt->addServ(this->temp);
             #endif
 
             #ifdef RELAY_ENABLE
@@ -70,6 +80,8 @@ void Hub::setup() {
                 this->relay->setup();
                 if (this->webServerSN != NULL)
                         this->webServerSN->addServ(this->relay);
+                if (this->mqtt != NULL)
+                        this->mqtt->addServ(this->relay);
             #endif
 
             #ifdef SWITCH_ENABLE
@@ -77,6 +89,8 @@ void Hub::setup() {
                 this->switc->setup();
                 if (this->webServerSN != NULL)
                         this->webServerSN->addServ(this->switc);
+                if (this->mqtt != NULL)
+                        this->mqtt->addServ(this->switc);
             #endif
 
             #ifdef GEIGER_ENABLE
@@ -84,7 +98,11 @@ void Hub::setup() {
                 this->geiger->setup();
                 if (this->webServerSN != NULL)
                         this->webServerSN->addServ(this->geiger);
+                if (this->mqtt != NULL)
+                        this->mqtt->addServ(this->geiger);
             #endif
+
+
 
 
 
@@ -125,5 +143,8 @@ void Hub::loop() {
 
         if (this->geiger!=NULL)
                 this->switc->loop();
+
+        if (this->mqtt!=NULL)
+                this->mqtt->loop();
 
 }

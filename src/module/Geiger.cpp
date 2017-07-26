@@ -85,17 +85,42 @@ void Geiger::servRegister(ESP8266WebServer *webServer) {
 
 }
 
+void Geiger::servSetMQTT(String mess) {
+}
 
-/**
- * Get current led configuration
- */
-void Geiger::servGet() {
+String Geiger::servGetMQTT() {
+
+        unsigned long now = millis();
+        // Send every 30 seconds, except if receive more than 10 particles in 5s
+        // Then send every 5 seconds
+        if ((now-lastMQTTMess)>30000l || ((now-lastMQTTMess)>5000l && count5>10) || now<lastMQTTMess) {
+
+                lastMQTTMess = now;
+                updateCounters();
+
+                String s;
+                s += "5 ";
+                s += String(hitPerSecsTouSv(count5f), 4);
+                s += " 15 ";
+                s += String(hitPerSecsTouSv(count15f), 4);
+                s += " 60 ";
+                s += String(hitPerSecsTouSv(count60f), 4);
+                s += " 300 ";
+                s += String(hitPerSecsTouSv(count300f), 4);
+                return s;
+        }
+
+        return "";
+}
+
+int Geiger::updateCounters() {
+
 
         // coutGeigerPerSecond[i]
-        int count5 = 0;
-        int count15 = 0;
-        int count60 = 0;
-        int count300 = 0;
+        count5 = 0;
+        count15 = 0;
+        count60 = 0;
+        count300 = 0;
 
         int t = (int) ((millis() / 1000)%MAX_STORE_DATA_GEIGER);
 
@@ -138,10 +163,10 @@ void Geiger::servGet() {
                 }
         }
 
-        float count5f = count5;
-        float count15f = count15;
-        float count60f = count60;
-        float count300f = count300;
+        count5f = count5;
+        count15f = count15;
+        count60f = count60;
+        count300f = count300;
 
         double durMili = (millis() - startMillis)/1000.0;
 
@@ -173,6 +198,16 @@ void Geiger::servGet() {
         else {
                 count300f=count300f/300.0;
         }
+
+        return t;
+}
+
+/**
+ * Get current led configuration
+ */
+void Geiger::servGet() {
+
+        int t = updateCounters();
 
         DynamicJsonBuffer jsonBuffer;
         JsonObject& root = jsonBuffer.createObject();
@@ -216,7 +251,7 @@ void Geiger::servGet() {
 /**
  * Transform hits per seconds into uSv.
  */
-double Geiger::hitPerSecsTouSv(double hitPerSeconds) {
+float Geiger::hitPerSecsTouSv(float hitPerSeconds) {
         return hitPerSeconds * 60 * conversionFactor;
 }
 
@@ -224,6 +259,5 @@ double Geiger::hitPerSecsTouSv(double hitPerSeconds) {
  * Do actions in the background
  */
 void Geiger::loop() {
-
 
 }

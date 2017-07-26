@@ -1,5 +1,6 @@
 #include "WebServerSN.h"
 #include "ServerUtil.h"
+#include "../Settings.h"
 
 /**
  * Construct the webserver
@@ -21,7 +22,9 @@ WebServerSN::~WebServerSN() {
  */
 void WebServerSN::setup() {
         Serial.println("WebServerSN: Starting webserver");
-        this->webServer->onNotFound([&] () {this->servFiles(); });
+        this->webServer->onNotFound([&] () {
+                this->servFiles();
+        });
         this->webServer->begin();
 }
 
@@ -98,13 +101,38 @@ void WebServerSN::servFiles() {
         String nameLC = String(name);
         nameLC.toLowerCase();
 
+        #ifdef WEB_SERVER_EXPOSE_CONFIG
+
+        if (nameLC.equals("/files")) {
+
+                DynamicJsonBuffer jsonBuffer;
+                JsonObject& root = jsonBuffer.createObject();
+                JsonArray& g = root.createNestedArray("files");
+
+                Dir dir = SPIFFS.openDir("/");
+                while (dir.next()) {
+                        JsonObject& x5 = g.createNestedObject();
+                        x5["file"] = dir.fileName();
+                        x5["size"] = dir.fileSize();
+                }
+
+                String s;
+                root.printTo(s);
+                webServer->send(200, "application/json", s);
+                return;
+        }
+
+        #endif
+
         // Don't allow /config/ in the name
+        #ifndef WEB_SERVER_EXPOSE_CONFIG
         if (nameLC.indexOf("/config/")>=0 || nameLC.indexOf("..")>=0) {
                 Serial.println("WebServerSN: Access forbidden to /config/!");
                 String s2 = "<html><head><title>No access</title></head><body>No access here!</body></html>";
                 this->send(403, s2, "text/html");
                 return;
         }
+        #endif
 
         if (apModeEnableOnly) {
                 if (name.startsWith("/index-se.html")) {

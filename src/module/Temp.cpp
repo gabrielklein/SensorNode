@@ -12,6 +12,12 @@ Temp::~Temp() {
         delete(this->dht);
 };
 
+void Temp::servSetMQTT(String mess) {
+}
+
+String Temp::servGetMQTT() {
+        return "";
+}
 
 void Temp::setup() {
 
@@ -58,7 +64,9 @@ void Temp::loop() {
 
 void Temp::servRegister(ESP8266WebServer *webServer) {
         this->webServer = webServer;
-        webServer->on("/temperature/get", HTTP_GET, [&] () {this->servTemp(); });
+        webServer->on("/temperature/get", HTTP_GET, [&] () {
+                this->servTemp();
+        });
 };
 
 /**

@@ -127,6 +127,21 @@ String KeyStore::getValue(String k) {
         return String("");
 }
 
+int KeyStore::getValueInt(String key) {
+        String v = getValue(key);
+        return v.toInt();
+}
+
+float KeyStore::getValueFloat(String key) {
+        String v = getValue(key);
+        return v.toFloat();
+}
+
+bool KeyStore::getValueBool(String key) {
+        String v = getValue(key);
+        return v.toInt() != 0;
+}
+
 /**
  * Set a key - value pair
  */

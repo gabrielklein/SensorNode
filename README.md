@@ -12,6 +12,8 @@ You can simulate an access on the SensorNode here https://gabrielklein.github.io
 * Control LEDs using the web interface (or calling an api).
 * Switch on-off a relay (using an api call).
 * Get value of a geiger counter (RadiationD-v1.1)
+* Configure access to a MQTT server (send messages)
+
 
 # What I expect to do?
 
@@ -59,6 +61,7 @@ Example for the pixel library: platformio lib install 679
 * You can control the leds (no ui yet)
 * You can get temperature
 * You can control 2 relays
+* You can send data to a MQTT server (only send geiger info for now)
 
 
 # What you need?
