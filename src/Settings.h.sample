@@ -5,8 +5,11 @@
 // -------------------------
 
 // Maximum number of items in config files
-// Avoid using a crazy value
+// Avoid using a crazy value as it may slow down processing
+// (dumb implementation)
 #define CONFIG_MAX_ITEM 32
+
+// ----------------------------------
 
 // Webserver on port 80
 #define WEB_SERVER_SN_ENABLE
@@ -14,11 +17,17 @@
 // (Tip: download the config and store it in data/config to avoid reconfiguring each time)
 #define WEB_SERVER_EXPOSE_CONFIG
 
+// ----------------------------------
+
 // Client that open an access point or connect to the access point.
 #define AP_SERVER_CLIENT_ENABLE
 
-// Do we have a WS281x on port D4 (recommended)
+// ----------------------------------
+
+// Do we have a WS281x on port D4 (highly recommended)
 #define WS281X_STRIP_ENABLE
+
+// ----------------------------------
 
 // Switch
 #define SWITCH_ENABLE
@@ -28,19 +37,27 @@
 //#define SWITCH_PIN_3
 //#define SWITCH_PIN_4
 
-// A dallas temperature module
+// ----------------------------------
+
+// Temperature modules
 #define TEMP_ENABLE
 // Update every miliseconds temperature.
 #define TEMP_UPDATE_EVERY_MS 15000
+
+//#define TEMP_DALLAS_ENABLED
 #define TEMP_DALLAS_PIN D1
 #define TEMP_DALLAS_MAX_MODULE 8
+
+#define TEMP_SECONDARY_ENABLED
 #define TEMP_SECONDARY_PIN D3
 #define TEMP_SECONDARY_TYPE DHT22
-#define TEMP_SECONDARY_NAME "dht22"
+#define TEMP_SECONDARY_NAME "DHT22"
+
+// ----------------------------------
 
 // A relay, you can have up to 5 relays
 // Comment pin assignement to avoid using them
-#define RELAY_ENABLE
+// #define RELAY_ENABLE
 #define RELAY_PIN_0 D7
 // If you enable it,
 // don't forget to change the pin of the geiger counter (or disable it)
@@ -49,17 +66,21 @@
 //#define RELAY_PIN_3
 //#define RELAY_PIN_4
 
+// ----------------------------------
+
 // Geiger counter
 #define GEIGER_ENABLE
 #define GEIGER_PIN D8
 // Conversion Factor, 0.00812 is for the J305ß tube
 #define GEIGER_CONVERT_USV 0.00812
 
+// ----------------------------------
+
 // MQTT
 // Send to a MQTT server
 #define MQTT_ENABLE
 
-
+// ----------------------------------
 
 // Get time from internet and sync it locally.
 #define TIME_ENABLED

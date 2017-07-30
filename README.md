@@ -29,7 +29,9 @@ You can simulate an access on the SensorNode here https://gabrielklein.github.io
 Help more than welcome!
 
 # Configuration
-Settings.h contains the configuration for the pins
+Settings.h contains the configuration for the pins and sensors.
+
+Please copy Settings.h.sample to Settings.h and configure it based on your hardware.
 
 # Needed libraries
 
