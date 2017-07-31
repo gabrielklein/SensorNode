@@ -10,6 +10,11 @@ Switch::~Switch() {
 
 
 void Switch::setup() {
+
+        for (int i=0; i<SWITCH_MAX_COUNT; i++) {
+                notifiedOn[i] = false;
+        }
+
   #ifdef SWITCH_PIN_0
         pinMode(SWITCH_PIN_0, INPUT_PULLUP);
   #endif
@@ -47,6 +52,82 @@ void Switch::servSetMQTT(String mess) {
 }
 
 String Switch::servGetMQTT() {
+
+  #ifdef SWITCH_PIN_0
+        if (digitalRead(SWITCH_PIN_0) == HIGH) {
+                if (notifiedOn[0]) {
+                        notifiedOn[0] = false;
+                        return "0 1";
+                }
+        }
+        else {
+                if (!notifiedOn[0]) {
+                        notifiedOn[0] = true;
+                        return "0 0";
+                }
+        }
+  #endif
+
+  #ifdef SWITCH_PIN_1
+        if (digitalRead(SWITCH_PIN_1) == HIGH) {
+                if (notifiedOn[1]) {
+                        notifiedOn[1] = false;
+                        return "1 1";
+                }
+        }
+        else {
+                if (!notifiedOn[1]) {
+                        notifiedOn[1] = true;
+                        return "1 0";
+                }
+        }
+  #endif
+
+  #ifdef SWITCH_PIN_2
+        if (digitalRead(SWITCH_PIN_2) == HIGH) {
+                if (notifiedOn[2]) {
+                        notifiedOn[2] = false;
+                        return "2 1";
+                }
+        }
+        else {
+                if (!notifiedOn[2]) {
+                        notifiedOn[2] = true;
+                        return "2 0";
+                }
+        }
+  #endif
+
+  #ifdef SWITCH_PIN_3
+        if (digitalRead(SWITCH_PIN_3) == HIGH) {
+                if (notifiedOn[3]) {
+                        notifiedOn[3] = false;
+                        return "3 1";
+                }
+        }
+        else {
+                if (!notifiedOn[3]) {
+                        notifiedOn[3] = true;
+                        return "3 0";
+                }
+        }
+  #endif
+
+  #ifdef SWITCH_PIN_4
+        if (digitalRead(SWITCH_PIN_4) == HIGH) {
+                if (notifiedOn[4]) {
+                        notifiedOn[4] = false;
+                        return "4 1";
+                }
+        }
+        else {
+                if (!notifiedOn[4]) {
+                        notifiedOn[4] = true;
+                        return "4 0";
+                }
+        }
+  #endif
+
         return "";
 }
 

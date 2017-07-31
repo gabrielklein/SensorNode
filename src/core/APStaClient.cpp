@@ -237,7 +237,7 @@ bool APStaClient::connectClient() {
         Serial.println("************ TODO Reset if in AP mode after a few minutes.");
 
 
-        this->led->rgb(0, 50, 0, true);
+        this->led->rgb(0, 10, 0, true);
         this->led->buildinLed(true);
 
         return true;

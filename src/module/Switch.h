@@ -4,6 +4,8 @@
 #ifndef SWITCH_H
 #define SWITCH_H
 
+#define SWITCH_MAX_COUNT 5
+
 #include "../Settings.h"
 #include <Arduino.h>
 #include "../server/IServer.h"
@@ -25,6 +27,7 @@ String servGetMQTT();
 
 private:
 ESP8266WebServer *webServer;
+boolean notifiedOn[SWITCH_MAX_COUNT];
 
 };
 

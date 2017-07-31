@@ -30,19 +30,19 @@ void Led::setup() {
         this->neo->Show();
 
         for (int i=0; i<WS281X_STRIP_COUNT; i++) {
-                this->neo->SetPixelColor(i, RgbColor(50,0,0));
+                this->neo->SetPixelColor(i, RgbColor(10,0,0));
                 this->neo->Show();
                 delay(5);
                 this->neo->SetPixelColor(i, RgbColor(0,0,0));
         }
         for (int i=0; i<WS281X_STRIP_COUNT; i++) {
-                this->neo->SetPixelColor(i, RgbColor(0,50,0));
+                this->neo->SetPixelColor(i, RgbColor(0,10,0));
                 this->neo->Show();
                 delay(5);
                 this->neo->SetPixelColor(i, RgbColor(0,0,0));
         }
         for (int i=0; i<WS281X_STRIP_COUNT; i++) {
-                this->neo->SetPixelColor(i, RgbColor(0,0,50));
+                this->neo->SetPixelColor(i, RgbColor(0,0,10));
                 this->neo->Show();
                 delay(5);
                 this->neo->SetPixelColor(i, RgbColor(0,0,0));
@@ -217,22 +217,22 @@ void Led::loop() {
 
                 switch (counter3) {
                 case 0:
-                        c = RgbColor(50,0,0);
+                        c = RgbColor(10,0,0);
                         break;
                 case 1:
-                        c = RgbColor(0,50,0);
+                        c = RgbColor(0,10,0);
                         break;
                 case 2:
-                        c = RgbColor(0,0,50);
+                        c = RgbColor(0,0,10);
                         break;
                 case 3:
-                        c = RgbColor(50,0,50);
+                        c = RgbColor(10,0,10);
                         break;
                 case 4:
-                        c = RgbColor(50,50,0);
+                        c = RgbColor(10,10,0);
                         break;
                 case 5:
-                        c = RgbColor(0,50,50);
+                        c = RgbColor(0,10,10);
                         break;
                 }
                 this->neo->SetPixelColor(counter2, c);
@@ -248,7 +248,7 @@ void Led::loop() {
  */
 void Led::rgb(int r, int g, int b, bool isLoopSetupTask) {
         this->neo->ClearTo(RgbColor(0, 0, 0));
-        for (int i=0; i<5 && i<WS281X_STRIP_COUNT; i++) {
+        for (int i=0; i<1 && i<WS281X_STRIP_COUNT; i++) {
                 this->neo->SetPixelColor(i, RgbColor(r, g, b));
         }
         if (isLoopSetupTask) {
