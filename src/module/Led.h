@@ -25,20 +25,15 @@ String servName();
 void servRegister(ESP8266WebServer *webServer);
 void servSet();
 void servGet();
-int countLed;
-void ledCountUpdated();
 void loop();
 int counter1 = 0;
 int counter2 = 0;
 int counter3 = 0;
 void buildinLed(bool ison);
 
-
 private:
 ESP8266WebServer *webServer;
-bool doCallLedCountUpdated = false;
 bool doCallNeoShow = false;
-const short int BUILTIN_LED1 = 2;
 
 };
 

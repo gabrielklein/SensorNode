@@ -27,6 +27,13 @@
 // Do we have a WS281x on port D4 (highly recommended)
 #define WS281X_STRIP_ENABLE
 
+// Number of strip
+#define WS281X_STRIP_COUNT 16
+
+// Don't change the pin (sorry)
+// 2 is equals to D4
+#define WS281X_STRIP_PIN 2
+
 // ----------------------------------
 
 // Switch

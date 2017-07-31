@@ -67,22 +67,6 @@ function refreshTimezone() {
 /**
  * Refresh the timezone options
  */
-function refreshLedConfig() {
-  $.getJSON({
-      url: "led/config",
-      dataType: "json"
-    })
-    .done(function(data) {
-      $("#leds_count").val(data.config.count);
-    }).fail(function(xhr, status, error) {
-      alert("Cannot get led configuration.\n" + error);
-      //$("#savewireless").attr('disabled', null);
-    });
-}
-
-/**
- * Refresh the timezone options
- */
 function refreshLedColor2(min, max) {
   var c = 0;
   for (var i = min; i <= max; i++) {
@@ -235,8 +219,6 @@ $(document).ready(function() {
 
   refreshTemperature();
 
-  refreshLedConfig();
-
   refreshLedColor();
 
   refreshMqttConfig();
@@ -296,20 +278,6 @@ $(document).ready(function() {
       }).fail(function(xhr, status, error) {
         alert("Cannot save timezone!\n" + error);
       });
-
-    var u = $("#leds_count").val();
-
-    $.getJSON("led/config", {
-        count: u
-      })
-      .done(function(data) {
-        refreshLedColor();
-        alert("Led saved.");
-      }).fail(function(xhr, status, error) {
-        alert("Cannot save leds count!\n" + error);
-      });
-
-
 
   });
 

@@ -1,8 +1,7 @@
 #include "Led.h"
 
 Led::Led(FileServ *fileServ) {
-        this->keyStore.setup("Led", fileServ);
-        ledCountUpdated();
+        this->neo = new NeoPixelBus<NeoGrbFeature, NeoEsp8266AsyncUart800KbpsMethod>(WS281X_STRIP_COUNT, WS281X_STRIP_PIN);
 };
 
 Led::~Led() {
@@ -19,35 +18,6 @@ void Led::buildinLed(bool ison) {
 }
 
 /**
- * Called when we have updated the configs.
- */
-void Led::ledCountUpdated() {
-
-        doCallLedCountUpdated = false;
-
-        String k = this->keyStore.getValue("count");
-        int l = k.toInt();
-        if (l<=0 || l > 1000) {
-                l = 10;
-                this->keyStore.setValue("count", String(l));
-        }
-
-        if (this->countLed == l && this->neo!=NULL) {
-                return;
-        }
-
-        this->countLed = l;
-        if (this->neo != NULL) {
-                this->neo->ClearTo(RgbColor(0, 0, 0));
-                this->neo->Show();
-                delete(this->neo);
-        }
-
-        this->neo = new NeoPixelBus<NeoGrbFeature, NeoEsp8266AsyncUart800KbpsMethod>(this->countLed, 2 /*port*/);
-
-}
-
-/**
  * Called at setup time. Use this call to initialize some data.
  */
 void Led::setup() {
@@ -59,19 +29,19 @@ void Led::setup() {
         //this->neo->ClearTo(RgbColor(0, 0, 0));
         this->neo->Show();
 
-        for (int i=0; i<countLed; i++) {
+        for (int i=0; i<WS281X_STRIP_COUNT; i++) {
                 this->neo->SetPixelColor(i, RgbColor(50,0,0));
                 this->neo->Show();
                 delay(5);
                 this->neo->SetPixelColor(i, RgbColor(0,0,0));
         }
-        for (int i=0; i<countLed; i++) {
+        for (int i=0; i<WS281X_STRIP_COUNT; i++) {
                 this->neo->SetPixelColor(i, RgbColor(0,50,0));
                 this->neo->Show();
                 delay(5);
                 this->neo->SetPixelColor(i, RgbColor(0,0,0));
         }
-        for (int i=0; i<countLed; i++) {
+        for (int i=0; i<WS281X_STRIP_COUNT; i++) {
                 this->neo->SetPixelColor(i, RgbColor(0,0,50));
                 this->neo->Show();
                 delay(5);
@@ -100,10 +70,6 @@ void Led::servRegister(ESP8266WebServer *webServer) {
         webServer->on("/led/get", HTTP_GET, [&] () {
                 this->servGet();
         });
-        webServer->on("/led/config", HTTP_GET, [&] () {
-                this->keyStore.servConfig(this->webServer);
-                doCallLedCountUpdated = true;
-        });
         //webServer->on("/ap/scan.do", HTTP_GET, [&] () {this->getScan(); });
 }
 
@@ -115,10 +81,10 @@ void Led::servGet() {
         DynamicJsonBuffer jsonBuffer;
         JsonObject& root = jsonBuffer.createObject();
         root["time"] = millis();
-        root["count"] = this->countLed;
+        root["count"] = WS281X_STRIP_COUNT;
         JsonObject& l = root.createNestedObject("led");
         char buff[10];
-        for (int i=0; i<this->countLed; i++) {
+        for (int i=0; i<WS281X_STRIP_COUNT; i++) {
                 RgbColor c = this->neo->GetPixelColor(i);
                 HtmlColor h = HtmlColor(c);
                 int l2 = h.ToNumericalString(buff, 10);
@@ -185,7 +151,7 @@ void Led::servSet() {
                 ServerUtil::sendFail(this->webServer, 1, "l parameter is not defined");
         }
         else if (l.equals("*")) {
-                for (int i=0; i<countLed; i++) {
+                for (int i=0; i<WS281X_STRIP_COUNT; i++) {
                         this->neo->SetPixelColor(i, c);
                 }
                 doCallNeoShow = true;
@@ -205,7 +171,7 @@ void Led::servSet() {
                                 s += (cc-'0');
                         }
                         else {
-                                if (s>=0 && s<countLed) {
+                                if (s>=0 && s<WS281X_STRIP_COUNT) {
                                         this->neo->SetPixelColor(s, c);
                                 }
                                 s = -1;
@@ -223,11 +189,6 @@ void Led::servSet() {
  */
 void Led::loop() {
 
-
-        if (doCallLedCountUpdated) {
-                ledCountUpdated();
-        }
-
         if (doCallNeoShow) {
                 doCallNeoShow = false;
                 this->neo->Show();
@@ -244,7 +205,7 @@ void Led::loop() {
                 this->neo->SetPixelColor(counter2, c);
                 counter1 = 0;
                 counter2++;
-                if (counter2>=countLed) {
+                if (counter2>=WS281X_STRIP_COUNT) {
                         counter2 = 0;
 
                         counter3++;
@@ -287,7 +248,7 @@ void Led::loop() {
  */
 void Led::rgb(int r, int g, int b, bool isLoopSetupTask) {
         this->neo->ClearTo(RgbColor(0, 0, 0));
-        for (int i=0; i<5 && i<this->countLed; i++) {
+        for (int i=0; i<5 && i<WS281X_STRIP_COUNT; i++) {
                 this->neo->SetPixelColor(i, RgbColor(r, g, b));
         }
         if (isLoopSetupTask) {
