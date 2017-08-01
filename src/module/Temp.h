@@ -32,7 +32,7 @@ String servGetMQTT();
 
 private:
 ESP8266WebServer *webServer;
-#ifdef TEMP_DALLAS_ENABLED
+#ifdef TEMP_DALLAS_ENABLE
 OneWire *oneWire = NULL;
 DallasTemperature *sensors = NULL;
 int deviceCount = 0;
@@ -41,7 +41,7 @@ unsigned long lastMQTTMessDallas[TEMP_DALLAS_MAX_MODULE];
 String addr2MType(DeviceAddress* addr);
 String addr2Hex(DeviceAddress* addr);
 #endif
-#ifdef TEMP_SECONDARY_ENABLED
+#ifdef TEMP_SECONDARY_ENABLE
 DHT *dht;
 unsigned long lastMQTTMessDHT = 0;
 #endif

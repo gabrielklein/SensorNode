@@ -17,6 +17,15 @@
 // (Tip: download the config and store it in data/config to avoid reconfiguring each time)
 #define WEB_SERVER_EXPOSE_CONFIG
 
+// Do we support OTA updates (update module over the air)
+#define OTA_ENABLE
+//#define OTA_PORT 8266
+//#define OTA_PASSWORD "MyOtaPassword"
+
+// I suggest to edit platformio.ini and add
+// upload_port=10.0.0.135
+// upload_flags = --port=8266 --auth=MyOtaPassword
+
 // ----------------------------------
 
 // Client that open an access point or connect to the access point.
@@ -51,11 +60,11 @@
 // Update every miliseconds temperature.
 #define TEMP_UPDATE_EVERY_MS 15000
 
-//#define TEMP_DALLAS_ENABLED
+//#define TEMP_DALLAS_ENABLE
 #define TEMP_DALLAS_PIN D1
 #define TEMP_DALLAS_MAX_MODULE 8
 
-#define TEMP_SECONDARY_ENABLED
+#define TEMP_SECONDARY_ENABLE
 #define TEMP_SECONDARY_PIN D3
 #define TEMP_SECONDARY_TYPE DHT22
 #define TEMP_SECONDARY_NAME "DHT22"
@@ -90,7 +99,7 @@
 // ----------------------------------
 
 // Get time from internet and sync it locally.
-#define TIME_ENABLED
+#define TIME_ENABLE
 
 
 // --------------------------------------------------------

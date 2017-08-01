@@ -12,6 +12,7 @@ Hub::~Hub() {
         delete(this->switc);
         delete(this->geiger);
         delete(this->mqtt);
+        delete(this->otaUpdate);
 };
 
 /**
@@ -50,9 +51,15 @@ void Hub::setup() {
         }
         #endif
 
+        #ifdef OTA_ENABLE
+        this->otaUpdate = new OTAUpdate();
+        this->otaUpdate->setup();
+        #endif
+
+
         if (isClientMode) {
 
-            #ifdef TIME_ENABLED
+            #ifdef TIME_ENABLE
                 this->iTime = new ITime(&this->fileServ);
                 this->iTime->setup();
                 if (this->webServerSN != NULL)
@@ -146,5 +153,8 @@ void Hub::loop() {
 
         if (this->mqtt!=NULL)
                 this->mqtt->loop();
+
+        if (this->otaUpdate!=NULL)
+                this->otaUpdate->loop();
 
 }

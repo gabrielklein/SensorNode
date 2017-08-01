@@ -1,25 +1,25 @@
 #include "Temp.h"
 
 Temp::Temp() {
-  #ifdef TEMP_DALLAS_ENABLED
+  #ifdef TEMP_DALLAS_ENABLE
         this->oneWire = new OneWire(TEMP_DALLAS_PIN);
         this->sensors = new DallasTemperature(this->oneWire);
         for (int i=0; i<TEMP_DALLAS_MAX_MODULE; i++) {
                 lastMQTTMessDallas[i] = 0;
         }
   #endif
-  #ifdef TEMP_SECONDARY_ENABLED
+  #ifdef TEMP_SECONDARY_ENABLE
         lastMQTTMessDHT = 0;
         this->dht = new DHT(TEMP_SECONDARY_PIN, TEMP_SECONDARY_TYPE);
   #endif
 };
 
 Temp::~Temp() {
-  #ifdef TEMP_DALLAS_ENABLED
+  #ifdef TEMP_DALLAS_ENABLE
         delete(this->sensors);
         delete(this->oneWire);
   #endif
-  #ifdef TEMP_SECONDARY_ENABLED
+  #ifdef TEMP_SECONDARY_ENABLE
         delete(this->dht);
   #endif
 
@@ -30,7 +30,7 @@ Temp::~Temp() {
 void Temp::servSetMQTT(String mess) {
 }
 
-#ifdef TEMP_DALLAS_ENABLED
+#ifdef TEMP_DALLAS_ENABLE
 String Temp::addr2MType(DeviceAddress* addr) {
         switch(*addr[0]) {
         // also DS1820
@@ -51,7 +51,7 @@ String Temp::addr2MType(DeviceAddress* addr) {
 }
 #endif
 
-#ifdef TEMP_DALLAS_ENABLED
+#ifdef TEMP_DALLAS_ENABLE
 String Temp::addr2Hex(DeviceAddress* addr) {
         String s2;
         for(int j = 0; j < 8; j++) {
@@ -71,7 +71,7 @@ String Temp::servGetMQTT() {
 
         // Send every 30 seconds, except if receive more than 10 particles in 5s
         // Then send every 5 seconds
-#ifdef TEMP_SECONDARY_ENABLED
+#ifdef TEMP_SECONDARY_ENABLE
         if ((now-lastMQTTMessDHT)>30000l || now<lastMQTTMessDHT) {
 
                 lastMQTTMessDHT = now;
@@ -95,7 +95,7 @@ String Temp::servGetMQTT() {
         }
 #endif
 
-#ifdef TEMP_DALLAS_ENABLED
+#ifdef TEMP_DALLAS_ENABLE
 
         for (int i = 0; i<deviceCount; i++) {
                 if ((now-lastMQTTMessDallas[i])>30000l || now<lastMQTTMessDallas[i]) {
@@ -133,11 +133,11 @@ String Temp::servGetMQTT() {
 
 void Temp::setup() {
 
-#ifdef TEMP_SECONDARY_ENABLED
+#ifdef TEMP_SECONDARY_ENABLE
         dht->begin();
 #endif
 
-#ifdef TEMP_DALLAS_ENABLED
+#ifdef TEMP_DALLAS_ENABLE
         this->sensors->begin();
         this->deviceCount = this->sensors->getDeviceCount();
         if (this->deviceCount>TEMP_DALLAS_MAX_MODULE) {
@@ -168,12 +168,12 @@ void Temp::loop() {
 
         timeLastUpdate = millis();
 
-#ifdef TEMP_SECONDARY_ENABLED
+#ifdef TEMP_SECONDARY_ENABLE
         dhtHumidity = dht->readHumidity();
         dhtTemp = dht->readTemperature();
 #endif
 
-#ifdef TEMP_DALLAS_ENABLED
+#ifdef TEMP_DALLAS_ENABLE
         for (int i=0; i<this->deviceCount; i++) {
                 this->sensors->requestTemperaturesByAddress(this->addr[i]);
         }
@@ -212,7 +212,7 @@ void Temp::servTemp() {
                 loop();
         }
 
-        #ifdef TEMP_DALLAS_ENABLED
+        #ifdef TEMP_DALLAS_ENABLE
         float temp = this->sensors->getTempCByIndex(0);
         #endif
 
@@ -221,7 +221,7 @@ void Temp::servTemp() {
         root["time"] = millis();
         JsonArray& tempJ = root.createNestedArray("temp");
 
-#ifdef TEMP_SECONDARY_ENABLED
+#ifdef TEMP_SECONDARY_ENABLE
         {
                 if (!isnan(dhtTemp) && !isnan(dhtHumidity)) {
                         JsonObject& x = tempJ.createNestedObject();
@@ -234,7 +234,7 @@ void Temp::servTemp() {
         }
 #endif
 
-#ifdef TEMP_DALLAS_ENABLED
+#ifdef TEMP_DALLAS_ENABLE
         for (int i=0; i<this->deviceCount; i++) {
                 JsonObject& x = tempJ.createNestedObject();
                 //this->sensors->requestTemperaturesByAddress(this->addr[i]);

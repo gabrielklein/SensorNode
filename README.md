@@ -72,6 +72,18 @@ Example for the pixel library: platformio lib install 679
 - An ESP8266
 - Some modules
 
+# OTA updates
+
+You can support OTA updates (configure in Settings.h!)
+
+Deploying the SPIFFS part is faster.
+
+In platformio.ini add
+// upload_port=10.0.0.135
+// upload_flags = --port=8266 --auth=YourPassword
+
+With the IP of your module, port and password
+
 # Supported modules
 
 You may be interested to buy:

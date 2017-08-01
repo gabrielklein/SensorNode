@@ -9,6 +9,7 @@
 #include "FileServ.h"
 #include "APStaClient.h"
 #include "ITime.h"
+#include "OTAUpdate.h"
 #include "../server/MQTT.h"
 #include "../server/WebServerSN.h"
 #include "../module/Led.h"
@@ -39,6 +40,7 @@ ITime *iTime = NULL;
 Switch *switc = NULL;
 Geiger *geiger = NULL;
 MQTT *mqtt = NULL;
+OTAUpdate *otaUpdate = NULL;
 };
 
 #endif
