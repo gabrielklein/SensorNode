@@ -60,7 +60,13 @@ void WebServerSN::addServ(IServer *iServer) {
  * Loop the server (call it in the loop phase!)
  */
 void WebServerSN::loop() {
+        unsigned long now = millis();
         this->webServer->handleClient();
+        unsigned long duration = millis() - now;
+        if (duration > 100) {
+                Serial.print("WebServerSN: is a bit long: ");
+                Serial.println(duration);
+        }
 };
 
 /**
@@ -86,6 +92,9 @@ void WebServerSN::send(int responseCode, String content, String mime) {
  * Please note that only alphanumeric, digital, ., /, _ and - are accepted to avoid risks of hack
  */
 void WebServerSN::servFiles() {
+
+        unsigned long now = millis();
+
 
         // Open the file and send the content
         String name(this->webServer->uri());
@@ -164,30 +173,45 @@ void WebServerSN::servFiles() {
                 }
         }
 
-        // Open Files
-        File webFile = this->fileServ->openR(name);
+        // Try to use the compressed version
+        String nameGZ = name + ".gz";
+        File webFile = this->fileServ->openR(nameGZ);
+        if (webFile) {
+                Serial.println("WebServerSN: Success opening file (gz): " + nameGZ);
+        }
+        else {
+                // Use the non-gz version
+                webFile = this->fileServ->openR(name);
+                if (webFile) {
+                        Serial.println("WebServerSN: Success opening file (non-gz): " + name);
+                }
+        }
 
-        // We must redirect on the ip if we have typed another site.
-        //if (!webFile || !this->webServer->hostHeader().equals(this->ip)) {
 
-        //request->redirect("/login");
-        //      String str = String();
-        //    str += "<!DOCTYPE html><html><head><title>Redirecting to SensorNode</title></head><body>"
-        //             "<h1>Redirecting to SensorNode</h1><p><a href=\"http://";
-        //      str += this->ip;
-        //      str += "/ap/index.html\">  Click to redirect now</a><script>document.location.href='http://";
-        //      str += this->ip;
-        //      str +="/ap/index.html';</script>";
-        //      str += "</p></body></html>";
-        //      this->send(200, str, "text/html");
-        //      this->notif->processing();
-        //      return;
-        //}
+// We must redirect on the ip if we have typed another site.
+//if (!webFile || !this->webServer->hostHeader().equals(this->ip)) {
+
+//request->redirect("/login");
+//      String str = String();
+//    str += "<!DOCTYPE html><html><head><title>Redirecting to SensorNode</title></head><body>"
+//             "<h1>Redirecting to SensorNode</h1><p><a href=\"http://";
+//      str += this->ip;
+//      str += "/ap/index.html\">  Click to redirect now</a><script>document.location.href='http://";
+//      str += this->ip;
+//      str +="/ap/index.html';</script>";
+//      str += "</p></body></html>";
+//      this->send(200, str, "text/html");
+//      this->notif->processing();
+//      return;
+//}
 
         if (webFile) {
                 String mime = ServerUtil::getMime(name);
                 this->webServer->streamFile(webFile, mime);
                 webFile.close();
+                unsigned long duration = millis() - now;
+                Serial.print("Time to serv "+name+" : ");
+                Serial.println(duration);
                 return;
         }
 

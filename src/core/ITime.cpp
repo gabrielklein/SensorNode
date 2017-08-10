@@ -26,7 +26,9 @@ void ITime::servRegister(ESP8266WebServer *webServer) {
                 this->servTimezone();
         });
         webServer->on("/time/config", HTTP_GET, [&] () {
-                this->keyStore.servConfig(this->webServer); tzCurrentIndex=-1;
+                if (this->keyStore.servConfig(this->webServer)) {
+                        tzCurrentIndex=-1;
+                }
         });
 };
 

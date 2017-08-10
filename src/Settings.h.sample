@@ -43,6 +43,11 @@
 // 2 is equals to D4
 #define WS281X_STRIP_PIN 2
 
+// Method and feature to use
+// More information on https://github.com/Makuna/NeoPixelBus/wiki/NeoPixelBus-object
+#define WS281X_FEATURE NeoGrbFeature
+#define WS281X_METHOD NeoEsp8266AsyncUart800KbpsMethod
+
 // ----------------------------------
 
 // Switch

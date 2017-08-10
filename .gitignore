@@ -3,4 +3,5 @@
 .gcc-flags.json
 .piolibdeps
 data/config/*
+data/*.gz
 src/Settings.h

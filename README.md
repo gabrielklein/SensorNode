@@ -33,6 +33,9 @@ Settings.h contains the configuration for the pins and sensors.
 
 Please copy Settings.h.sample to Settings.h and configure it based on your hardware.
 
+You can speedup file serving by gzipping files in data.
+On linux just call "gzip-data.sh"
+
 # Needed libraries
 
 pio lib list
@@ -71,18 +74,6 @@ Example for the pixel library: platformio lib install 679
 - PlatformIO
 - An ESP8266
 - Some modules
-
-# OTA updates
-
-You can support OTA updates (configure in Settings.h!)
-
-Deploying the SPIFFS part is faster.
-
-In platformio.ini add
-// upload_port=10.0.0.135
-// upload_flags = --port=8266 --auth=YourPassword
-
-With the IP of your module, port and password
 
 # Supported modules
 
@@ -187,6 +178,8 @@ https://www.aliexpress.com/item/Free-Shipping-Newer-Upgrade-Assembled-DIY-Geiger
 
 # How to deploy
 
+You need PlatformIO (it's the simplest solution :))
+
 All actions are done on the left panel.
 
 To build: PlatformIO: Build
@@ -204,3 +197,17 @@ Now click on PlatformIO: Upload
 The leds will blink and you will see a new wireless access.
 
 Connect to this wireless access and type: http://192.168.0.1/ in your browser.
+
+# OTA updates
+
+You can support OTA updates (configure in Settings.h!)
+
+Deploying the SPIFFS part is faster.
+
+In platformio.ini add
+
+// upload_port=10.0.0.135
+
+// upload_flags = --port=8266 --auth=YourPassword
+
+With the IP of your module, port and password.

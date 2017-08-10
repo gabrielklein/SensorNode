@@ -17,7 +17,6 @@ class Geiger : public IServer, public IMQTT {
 public:
 Geiger(FileServ *fileServ);
 ~Geiger();
-KeyStore keyStore;
 void setup();
 String servName();
 void servRegister(ESP8266WebServer *webServer);

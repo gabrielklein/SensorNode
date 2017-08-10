@@ -29,7 +29,7 @@ bool getValueBool(String key);
 // Set a value in the configuration
 bool setValue(String key, String value);
 // Set a value in the configuration
-void servConfig(ESP8266WebServer *webServer);
+bool servConfig(ESP8266WebServer *webServer);
 
 private:
 String key[CONFIG_MAX_ITEM];

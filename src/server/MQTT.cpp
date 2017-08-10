@@ -20,6 +20,7 @@ MQTT::~MQTT() {
 
 void MQTT::setup() {
 
+        lastReconnectAttempt = millis();
 
         topicChannel = this->keyStore.getValue("mqtt_topic_message");
         enable = this->keyStore.getValueBool("mqtt_enable");
@@ -82,29 +83,53 @@ void MQTT::loop() {
                 return;
         }
 
+        if (!client->connected()) {
+                unsigned long now = millis();
+                if (now - lastReconnectAttempt < 5000 & now >= lastReconnectAttempt) {
+                        return;
+                }
+
+                lastReconnectAttempt = now;
+                if (client->connect(this->keyStore.getValue("mqtt_server").c_str(), this->keyStore.getValue("mqtt_user").c_str(), this->keyStore.getValue("mqtt_password").c_str())) {
+                        Serial.println("reconnect success");
+                }
+                else {
+                        Serial.println("reconnect failed");
+                }
+
+                client->loop();
+                return;
+        }
+
+
         client->loop();
+
+        if (failedMess.length() > 0) {
+                boolean r = client->publish(topicChannel.c_str(), failedMess.c_str(), true);
+                if (r) {
+                        Serial.println("Send MQTT (retry) "+failedMess);
+                        failedMess = "";
+                }
+                else {
+                        Serial.println("Failed Send MQTT (retry) "+failedMess);
+                }
+                return;
+        }
 
         for (int i=0; i<imqttCurrent; i++) {
                 IMQTT *iMQTT = imqtt[i];
                 String m = iMQTT->servGetMQTT();
                 if (m.length()>0) {
                         String mess = macID + " " + iMQTT->servName() + " " + m;
-                        // Reconnected if disconnected
-                        if (!client->connected()) {
-                                if (client->connect(this->keyStore.getValue("mqtt_server").c_str(), this->keyStore.getValue("mqtt_user").c_str(), this->keyStore.getValue("mqtt_password").c_str())) {
-                                        //Serial.println("reconnect success");
-                                }
-                                else {
-                                        //Serial.println("reconnect failed");
-                                }
-                        }
                         boolean r = client->publish(topicChannel.c_str(), mess.c_str(), true);
                         if (r) {
                                 Serial.println("Send MQTT "+mess);
                         }
                         else {
                                 Serial.println("Failed Send MQTT "+mess);
+                                failedMess = mess;
                         }
+                        return;
                         //Serial.println(r);
                 }
         }
@@ -138,7 +163,8 @@ String MQTT::servName() {
 void MQTT::servRegister(ESP8266WebServer *webServer) {
         this->webServer = webServer;
         webServer->on("/mqtt/config", HTTP_GET, [&] () {
-                this->keyStore.servConfig(this->webServer);
-                this->setup();
+                if (this->keyStore.servConfig(this->webServer)) {
+                        this->setup();
+                }
         });
 };

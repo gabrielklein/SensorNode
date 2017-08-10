@@ -46,7 +46,7 @@ DHT *dht;
 unsigned long lastMQTTMessDHT = 0;
 #endif
 char hexC[16] = { '0', '1', '2', '3', '4', '5', '6', '7', '8', '9', 'A', 'B', 'C', 'D', 'E', 'F' };
-long timeLastUpdate = 0;
+unsigned long timeLastUpdate = 0;
 float dhtTemp = 0;
 float dhtHumidity = 0;
 };

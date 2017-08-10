@@ -23,7 +23,6 @@ void servGet();
 
 private:
 Hub* hub = NULL;
-KeyStore keyStore;
 ESP8266WebServer *webServer;
 
 };

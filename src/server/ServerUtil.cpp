@@ -32,6 +32,9 @@ String ServerUtil::getMime(String name) {
         else if (name.endsWith(".xml")) {
                 return "application/xml";
         }
+        else if(name.endsWith(".gz")) {
+                return "application/x-gzip";
+        }
 
         return "text/html";
 };

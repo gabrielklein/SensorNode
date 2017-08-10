@@ -5,7 +5,6 @@
 Geiger *geigerForInterupt = NULL;
 
 Geiger::Geiger(FileServ *fileServ) {
-        this->keyStore.setup("Geiger", fileServ);
 };
 
 Geiger::~Geiger() {
@@ -76,9 +75,6 @@ String Geiger::servName() {
  */
 void Geiger::servRegister(ESP8266WebServer *webServer) {
         this->webServer = webServer;
-        webServer->on("/geiger/config", HTTP_GET, [&] () {
-                this->keyStore.servConfig(this->webServer);
-        });
         webServer->on("/geiger/get", HTTP_GET, [&] () {
                 this->servGet();
         });

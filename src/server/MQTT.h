@@ -38,6 +38,8 @@ IMQTT *imqtt[MAX_IMQTT];
 int imqttCurrent = 0;
 bool enable = false;
 String topicChannel;
+unsigned long lastReconnectAttempt = 0;
+String failedMess = "";
 
 };
 

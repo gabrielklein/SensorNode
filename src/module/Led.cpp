@@ -1,7 +1,7 @@
 #include "Led.h"
 
 Led::Led(FileServ *fileServ) {
-        this->neo = new NeoPixelBus<NeoGrbFeature, NeoEsp8266AsyncUart800KbpsMethod>(WS281X_STRIP_COUNT, WS281X_STRIP_PIN);
+        this->neo = new NeoPixelBus<WS281X_FEATURE, WS281X_METHOD>(WS281X_STRIP_COUNT, WS281X_STRIP_PIN);
 };
 
 Led::~Led() {

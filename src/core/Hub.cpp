@@ -125,36 +125,112 @@ void Hub::setup() {
  */
 void Hub::loop() {
 
-        if (this->webServerSN!=NULL)
+        if (this->webServerSN!=NULL) {
+                unsigned long now = millis();
                 this->webServerSN->loop();
-
-        if (this->iTime!=NULL)
-                this->iTime->loop();
-
-        if (isClientMode) {
-                if (this->led!=NULL)
-                        this->led->loop();
+                unsigned long duration = millis() - now;
+                if (duration > 100) {
+                        Serial.print("Loop for WebServerSN is a bit long: ");
+                        Serial.println(duration);
+                }
         }
 
-        if (this->temp!=NULL)
-                this->temp->loop();
-
-        if (this->apStaClient!=NULL)
-                this->apStaClient->loop();
-
-        if (this->relay!=NULL)
-                this->relay->loop();
-
-        if (this->switc!=NULL)
-                this->switc->loop();
-
-        if (this->geiger!=NULL)
-                this->switc->loop();
-
-        if (this->mqtt!=NULL)
-                this->mqtt->loop();
-
-        if (this->otaUpdate!=NULL)
+        if (this->otaUpdate!=NULL) {
+                unsigned long now = millis();
                 this->otaUpdate->loop();
+                unsigned long duration = millis() - now;
+                if (duration > 100) {
+                        Serial.print("Loop for otaUpdate is a bit long: ");
+                        Serial.println(duration);
+                }
+        }
+
+        if (!isClientMode) {
+                return;
+        }
+
+        if (this->iTime!=NULL) {
+                unsigned long now = millis();
+                this->iTime->loop();
+                unsigned long duration = millis() - now;
+                if (duration > 100) {
+                        Serial.print("Loop for iTime is a bit long: ");
+                        Serial.println(duration);
+                }
+        }
+
+        if (this->led!=NULL) {
+                unsigned long now = millis();
+                this->led->loop();
+                unsigned long duration = millis() - now;
+                if (duration > 100) {
+                        Serial.print("Loop for led is a bit long: ");
+                        Serial.println(duration);
+                }
+        }
+
+        if (this->temp!=NULL) {
+                unsigned long now = millis();
+                this->temp->loop();
+                unsigned long duration = millis() - now;
+                if (duration > 100) {
+                        Serial.print("Loop for temp is a bit long: ");
+                        Serial.println(duration);
+                }
+        }
+
+        if (this->apStaClient!=NULL) {
+                unsigned long now = millis();
+                this->apStaClient->loop();
+                unsigned long duration = millis() - now;
+                if (duration > 100) {
+                        Serial.print("Loop for apStaClient is a bit long: ");
+                        Serial.println(duration);
+                }
+        }
+
+        if (this->relay!=NULL) {
+                unsigned long now = millis();
+                this->relay->loop();
+                unsigned long duration = millis() - now;
+                if (duration > 100) {
+                        Serial.print("Loop for relay is a bit long: ");
+                        Serial.println(duration);
+                }
+        }
+
+        if (this->switc!=NULL) {
+                unsigned long now = millis();
+                this->switc->loop();
+                unsigned long duration = millis() - now;
+                if (duration > 100) {
+                        Serial.print("Loop for switc is a bit long: ");
+                        Serial.println(duration);
+                }
+        }
+
+
+        if (this->geiger!=NULL) {
+                unsigned long now = millis();
+                this->geiger->loop();
+                unsigned long duration = millis() - now;
+                if (duration > 100) {
+                        Serial.print("Loop for geiger is a bit long: ");
+                        Serial.println(duration);
+                }
+        }
+
+
+        if (this->mqtt!=NULL) {
+                unsigned long now = millis();
+                this->mqtt->loop();
+                unsigned long duration = millis() - now;
+                if (duration > 100) {
+                        Serial.print("Loop for mqtt is a bit long: ");
+                        Serial.println(duration);
+                }
+        }
+
+
 
 }

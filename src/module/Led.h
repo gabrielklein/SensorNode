@@ -20,7 +20,7 @@ KeyStore keyStore;
 void rgb(int r, int g, int b, bool isLoopSetupTask);
 void rgb(int id, int r, int g, int b);
 void setup();
-NeoPixelBus<NeoGrbFeature, NeoEsp8266AsyncUart800KbpsMethod> *neo;
+NeoPixelBus<WS281X_FEATURE, WS281X_METHOD> *neo;
 String servName();
 void servRegister(ESP8266WebServer *webServer);
 void servSet();

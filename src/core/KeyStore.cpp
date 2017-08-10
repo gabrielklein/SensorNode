@@ -8,8 +8,9 @@ KeyStore::KeyStore() {
 
 /**
  * Serv configuration
+ * Return true if some arguments were changed (if it's a "set" and not a "get")
  */
-void KeyStore::servConfig(ESP8266WebServer *webServer) {
+bool KeyStore::servConfig(ESP8266WebServer *webServer) {
 
         int currentArgCount = webServer->args();
 
@@ -41,6 +42,8 @@ void KeyStore::servConfig(ESP8266WebServer *webServer) {
         String s;
         root.printTo(s);
         webServer->send(200, "application/json", s);
+
+        return currentArgCount>0;
 }
 
 /**

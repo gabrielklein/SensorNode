@@ -3,7 +3,6 @@
 
 Services::Services(Hub* hub) {
         this->hub = hub;
-        this->keyStore.setup("Services", &hub->fileServ);
 };
 
 Services::~Services() {
@@ -44,9 +43,9 @@ void Services::servRegister(ESP8266WebServer *webServer) {
         //        this->servGet();
         //});
 
-        this->webServer->on("/services/config", HTTP_GET, [&] () {
-                keyStore.servConfig(this->webServer);
-        });
+        //this->webServer->on("/services/config", HTTP_GET, [&] () {
+        //        keyStore.servConfig(this->webServer);
+        //});
 
 }
 

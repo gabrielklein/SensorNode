@@ -3,7 +3,7 @@
     "time": 13747752,
     "temp": [
         {
-            "model": "DHT22",
+            "model": "FAKEDHT22",
             "addr": "dht22",
             "humidity": 22.30,
             "tempC": 20.60,
